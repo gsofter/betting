@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container"> <p> <a href='{% url 'home' %}'> Home </a> <a href='{% url 'player:player_list' %}'> </a> </p> </div>
+<div class = "container">
+    <h2> <a href='{% url 'player:player_list' %}'> Player List </a> Edit <h2>
+</div>
+<div class="container">
+    <form method='POST'> {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="submit">
+    </form>
+</div>
+{% endblock content %}

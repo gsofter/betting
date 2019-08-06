@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sports betting app </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>   
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Welcome to my betting app page</h1>
+    <p>Contains a lot of information for sport betting!</p> 
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">TipState</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{% url 'player:player_list' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Players
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'player:player_list' %}">ATP Players</a>
+          <a class="dropdown-item" href="{% url 'player:wta_player_list' %}">WTA Players</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{% url 'match_list' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Matches
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'atp_match_list' %}">ATP Matches</a>
+          <a class="dropdown-item" href="{% url 'wta_match_list' %}">WTA Matches</a>
+          <a class="dropdown-item" href="{% url 'match_list_api' %}">Matches API</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{% url 'atp_tour_list' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Tournaments
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'atp_tour_list' %}">ATP Tournaments</a>
+          <a class="dropdown-item" href="{% url 'wta_tour_list' %}">WTA Tournaments</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{% block  content %}
+<div class="container">
+    <div class = "row">
+        <div class="card p-3 m-3 col-12 col-md-12 col-lg-12">
+            <a href='{% url 'player:player_list' %}'> 
+                Player lists
+            </a>
+        </div>
+
+        <div class="card p-3 m-3 col-12 col-md-12 col-lg-12">
+            <a href='{% url 'match_list' %}'> 
+                Match lists
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+</body>
+</html>

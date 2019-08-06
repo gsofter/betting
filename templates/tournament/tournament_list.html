@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block  content %}
+<div class="container"> 
+    <h2> Tournaments list</h2>
+</div>
+<table class="table table-striped table-responsive">
+<thead>
+    <th> No </th>
+    <th> Round </th>
+    <th> Date </th>
+    <th> Tournament Name </th>
+    <th> Location </th>
+    <th> Series </th>
+    <th> Surface </th>
+    <th> Price </th>
+</thead>
+
+<tbody>
+    {% load mathfilters %}
+    {% for tour in tournaments %}
+    <tr>  
+       <td>{{ forloop.counter }}</td>
+       <td>{{ tour.round }}</td>
+       <td>{{ tour.date }}</td>
+       <td>{{ tour.name }}</td>
+       <td>{{ tour.location }}</td>
+       <td>{{ tour.series }}</td>
+       <td>{{ tour.surface }}</td>
+       <td>{{ tour.price }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+
+
+{% endblock  %}

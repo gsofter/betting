@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container"> <p> <a href='{% url 'home' %}'> Home </a> > <a href='{% url 'player:player_list' %}'>Player list</a> </p> </div>
+
+<h1> Player list </h1>
+<a class="btn btn-success" href="{% url 'player:player_create' %}"> Add new player </a> 
+<table class="table table-striped">
+<thead>
+    <th> Rank </th>
+    <th> MC </th>
+    <th> Country </th>
+    <th> Name </th>
+    <th> Point </th>
+    <th> age </th>
+    <th> + </th>
+    <th> - </th>
+    <th> Current Tournament </th>
+    <th> Prev Tournament </th>
+    <th> Next PTS </th>
+    <th> Max PTS </th>
+    <th> Actions </th>
+</thead>
+
+<tbody>
+    {% for player in player_list %}
+    <tr>  
+        <td> {{ player.rank }} </td>
+        {% if player.max_rank == -1 %}
+            <td>NCH</td>
+        {% elif player.max_rank == 0 %}
+            <td>CH</td>
+        {% else %}
+            <td>{{player.max_rank}}</td>
+        {% endif %}
+        <td> <div class='spr {{player.country.lower}}'></div> {{player.country}} </td>
+        <td> {{ player.name }} </td>
+        <td> {{ player.pts }} </td>
+        <th> {{ player.age }} </td>
+        <th> {{ player.inc_pts }} </td>
+        <th> {{ player.dec_pts }} </td>
+        <th> {{ player.cur_tournament }} </td>
+        <th> {{ player.prev_tournament }} </td>
+        <th> {{ player.next_pts }} </td>
+        <th> {{ player.max_pts }} </td>
+        <td>
+            {% comment %} <a href="{% url 'player:player_edit' player.id %}"> Edit </a> {% endcomment %}
+            {% comment %} <a href="{% url 'player:player_delete' player.id %}"> Delete </a> {% endcomment %}
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock content %}

@@ -1,0 +1,358 @@
+.jumbotron {
+    background-color: green;
+	color: white;
+	margin-bottom: 0rem;
+}
+
+.spr {
+	position: relative;
+	width: 16px;
+	height: 12px;
+	background:url("/static/img/sprite-hires.png") scroll;
+	background-size:2000px auto;
+	float: left;
+	margin-right:3px;
+	overflow: hidden;
+}
+.spr.alg {
+	background-position: -32px 0px;
+}
+.spr.arg {
+	background-position: -64px 0px;
+}
+.spr.aus {
+	background-position: -96px 0px;
+}
+.spr.aut {
+	background-position: -128px 0px;
+}
+.spr.bel {
+	background-position: -160px 0px;
+}
+.spr.bih {
+	background-position: -192px 0px;
+}
+.spr.blr {
+	background-position: -224px 0px;
+}
+.spr.bra {
+	background-position: -256px 0px;
+}
+.spr.bul {
+	background-position: -288px 0px;
+}
+.spr.can {
+	background-position: -320px 0px;
+}
+.spr.chi {
+	background-position: -352px 0px;
+}
+.spr.chn {
+	background-position: -384px 0px;
+}
+.spr.col {
+	background-position: -416px 0px;
+}
+.spr.cro {
+	background-position: -448px 0px;
+}
+.spr.cub {
+	background-position: -480px 0px;
+}
+.spr.cyp {
+	background-position: -512px 0px;
+}
+.spr.cze {
+	background-position: -544px 0px;
+}
+.spr.den {
+	background-position: -576px 0px;
+}
+.spr.dom {
+	background-position: -608px 0px;
+}
+.spr.ecu {
+	background-position: -640px 0px;
+}
+.spr.egy {
+	background-position: -672px 0px;
+}
+.spr.esp {
+	background-position: -704px 0px;
+}
+.spr.est {
+	background-position: -736px 0px;
+}
+.spr.fin {
+	background-position: -768px 0px;
+}
+.spr.fra {
+	background-position: -800px 0px;
+}
+.spr.gbr {
+	background-position: -832px 0px;
+}
+.spr.geo {
+	background-position: -864px 0px;
+}
+.spr.ger {
+	background-position: -896px 0px;
+}
+.spr.gre {
+	background-position: -928px 0px;
+}
+.spr.hun {
+	background-position: -960px 0px;
+}
+.spr.ind {
+	background-position: -992px 0px;
+}
+.spr.irl {
+	background-position: -1024px 0px;
+}
+.spr.isl {
+	background-position: -1056px 0px;
+}
+.spr.isr {
+	background-position: -1088px 0px;
+}
+.spr.ita {
+	background-position: -1120px 0px;
+}
+.spr.jam {
+	background-position: -1152px 0px;
+}
+.spr.jpn {
+	background-position: -1184px 0px;
+}
+.spr.kaz {
+	background-position: -1216px 0px;
+}
+.spr.kor {
+	background-position: -1248px 0px;
+}
+.spr.lat {
+	background-position: -1280px 0px;
+}
+.spr.ltu {
+	background-position: -1312px 0px;
+}
+.spr.lux {
+	background-position: -1344px 0px;
+}
+.spr.mar {
+	background-position: -1376px 0px;
+}
+.spr.mex {
+	background-position: -1408px 0px;
+}
+.spr.mon {
+	background-position: -1440px 0px;
+}
+.spr.ned {
+	background-position: -1472px 0px;
+}
+.spr.nor {
+	background-position: -1504px 0px;
+}
+.spr.nzl {
+	background-position: -1536px 0px;
+}
+.spr.pak {
+	background-position: -1568px 0px;
+}
+.spr.par {
+	background-position: -1600px 0px;
+}
+.spr.per {
+	background-position: -1632px 0px;
+}
+.spr.pol {
+	background-position: -1664px 0px;
+}
+.spr.por {
+	background-position: -1696px 0px;
+}
+.spr.rou {
+	background-position: -1728px 0px;
+}
+.spr.rsa {
+	background-position: -1760px 0px;
+}
+.spr.rus {
+	background-position: -1792px 0px;
+}
+.spr.slo {
+	background-position: -1824px 0px;
+}
+.spr.srb {
+	background-position: -1856px 0px;
+}
+.spr.sui {
+	background-position: -1888px 0px;
+}
+.spr.svk {
+	background-position: -1920px 0px;
+}
+.spr.swe {
+	background-position: -1952px 0px;
+}
+.spr.tha {
+	background-position: 0px -21px;
+}
+.spr.tpe { background-position: -32px -21px; }
+.spr.tun {
+	background-position: -64px -21px;
+}
+.spr.tur {
+	background-position: -96px -21px;
+}
+.spr.ukr {
+	background-position: -128px -21px;
+}
+.spr.uru {
+	background-position: -160px -21px;
+}
+.spr.usa {
+	background-position: -192px -21px;
+}
+.spr.uzb {
+	background-position: -224px -21px;
+}
+.spr.ven {
+	background-position: -256px -21px;
+}
+.spr.alb {
+	background-position: -288px -21px;
+}
+.spr.mne {
+	background-position: -320px -21px;
+}
+.spr.mda {
+	background-position: -352px -21px;
+}
+.spr.gua {
+	background-position: -384px -21px;
+}
+.spr.ina {
+	background-position: -416px -21px;
+}
+.spr.hai {
+	background-position: -448px -21px;
+}
+.spr.zim {
+	background-position: -480px -21px;
+}
+.spr.bar {
+	background-position: -512px -21px;
+}
+.spr.esa {
+	background-position: -544px -21px;
+}
+.spr.bol {
+	background-position: -576px -21px;
+}
+.spr.kuw {
+	background-position: -608px -21px;
+}
+.spr.pur {
+	background-position: -640px -21px;
+}
+.spr.kgz {
+	background-position: -672px -21px;
+}
+.spr.pry {
+	background-position: -704px -21px;
+}
+.spr.lie {
+	background-position: -736px -21px;
+}
+.spr.mkd {
+    background-position: -768px -21px;
+}
+.spr.hkg {
+    background-position: -800px -21px;
+}
+.spr.phi {
+    background-position: -832px -21px;
+}
+.spr.oma {
+    background-position: -864px -21px;
+}
+.spr.arm {
+    background-position: -896px -21px;
+}
+.spr.sin {
+    background-position: -928px -21px;
+}
+.spr.nam {
+    background-position: -960px -21px;
+}
+.spr.cam {
+    background-position: -992px -21px;
+}
+.spr.ben {
+    background-position: -1024px -21px;
+}
+.spr.vie {
+    background-position: -1056px -21px;
+}
+.spr.mas {
+    background-position: -1088px -21px;
+}
+.spr.ngr {
+    background-position: -1120px -21px;
+}
+.spr.png {
+    background-position: -1152px -21px;
+}
+.spr.sam {
+    background-position: -1184px -21px;
+}
+.spr.tto {
+    background-position: -1216px -21px;
+}
+.spr.lib {
+    background-position: -1248px -21px;
+}
+.spr.bdi {
+    background-position: -1280px -21px;
+}
+.spr.mlt {
+    background-position: -1312px -21px;
+}
+.spr.tkm {
+    background-position: -1344px -21px;
+}
+.spr.bah {
+    background-position: -1376px -21px;
+}
+.spr.ant {
+    background-position: -1408px -21px;
+}
+.spr.iri {
+    background-position: -1440px -21px;
+}
+.spr.mri {
+    background-position: -1472px -21px;
+}
+.spr.sri {
+    background-position: -1504px -21px;
+}
+.spr.ken {
+    background-position: -1568px -21px;
+}
+.spr.cmr {
+    background-position: -1600px -21px;
+}
+.spr.qat {
+    background-position: -1632px -21px;
+}
+.spr.nmi {
+    background-position: -1664px -21px;
+}
+
+.modal-dialog {
+    max-width: 800px;
+    margin: 1.75rem auto;
+}

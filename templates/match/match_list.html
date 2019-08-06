@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block  content %}
+
+<div class="container"> <p> <a href='{% url 'home' %}'> Home </a> > <a href='{% url 'match_list' %}'>Match list</a> </p> </div>
+<h1> Matches list </h1>
+
+<table class="table table-striped table-responsive">
+<thead>
+    <th> No </th>
+    <th> ATP </th>
+    <th> Location </th>
+    <th> Tournament </th>
+    <th> Date </th>
+    <th> Series </th>
+    <th> Court </th>
+    <th> Surface </th>
+    <th> Round </th>
+    <th> Bestof </th>
+    <th> Winner </th>
+    <th> WRank </th>
+    <th> WRank </th>
+    <th> Wpts </th>
+    <th> W1 </th>
+    <th> L1 </th>
+    <th> W2 </th>
+    <th> L2 </th>
+    <th> W3 </th>
+    <th> L3 </th>
+    <th> W4 </th>
+    <th> L4 </th>
+    <th> W5 </th>
+    <th> L5 </th>
+    <th> Wsets </th>
+    <th> Lsets </th>
+    <th> Comment </th>
+    <th> B365w </th>
+    <th> B365l </th>
+    <th> PSW </th>
+    <th> PSL </th>
+    <th> Maxw </th>
+    <th> Maxl </th>
+    <th> Avgw </th>
+    <th> Avgl </th>
+</thead>
+
+<tbody>
+    {% load mathfilters %}
+    {% for match in matches %}
+    <tr>  
+        <td> {{ items_cnt|add:forloop.counter }} </td> 
+        <td> {{ match.atp }} </td>
+        <td> {{ match.location }} </td>
+        <td> {{ match.tournament }} </td>
+        <td> {{ match.date }} </td>
+        <td> {{ match.series }} </td>
+        <td> {{ match.court }} </td>
+        <td> {{ match.round }} </td>
+        <td> {{ match.bestof }} </td>
+        <td> {{ match.winner }} </td>
+        <td> {{ match.loser }} </td>
+        <td> {{ match.wrank }} </td>
+        <td> {{ match.lrank }} </td>
+        <td> {{ match.wpts }} </td>
+        <td> {{ match.lpts }} </td>
+        <td> {{ match.w1 }} </td>
+        <td> {{ match.l1 }} </td>
+        <td> {{ match.w2 }} </td>
+        <td> {{ match.l2 }} </td>
+        <td> {{ match.w3 }} </td>
+        <td> {{ match.l3 }} </td>
+        <td> {{ match.w4 }} </td>
+        <td> {{ match.w4 }} </td>
+        <td> {{ match.w5 }} </td>
+        <td> {{ match.l5 }} </td>
+        <td> {{ match.wsets }} </td>
+        <td> {{ match.lsets }} </td>
+        <td> {{ match.comment }} </td>
+        <td> {{ match.b365w }} </td>
+        <td> {{ match.b365l }} </td>
+        <td> {{ match.psw }} </td>
+        <td> {{ match.psl }} </td>
+        <td> {{ match.maxw }} </td>
+        <td> {{ match.maxl }} </td>
+        <td> {{ match.avgw }} </td>
+        <td> {{ match.avgl }} </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+
+
+{% endblock  %}
