@@ -7,3 +7,8 @@ venv/
 
 #log files
 *.log
+
+#cache files
+*.pyc
+
+betting/
