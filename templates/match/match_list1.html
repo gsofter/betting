@@ -195,8 +195,8 @@
             data-winner = "{{ match.winner }}"
             data-wdfault = "{{ match.wdfault }}"
             data-waces = "{{ match.waces}}"
-            data-wsera = "{{ match.wsera}}"
-            data-wserb = "{{ match.wserb}}"
+            data-wsera = "{{ match.wser1}}"
+            data-wserb = "{{ match.wser2}}"
             data-wser = "{{ match.wser}}"
             data-wrec = "{{ match.wrec}}"
             data-wtotal = "{{ match.wtotal}}"
@@ -204,8 +204,8 @@
             data-loser = "{{ match.loser}}"
             data-ldfault = "{{ match.ldfault }}"
             data-laces = "{{ match.laces}}"
-            data-lsera = "{{ match.lsera}}"
-            data-lserb = "{{ match.lserb}}"
+            data-lsera = "{{ match.lser1}}"
+            data-lserb = "{{ match.lser1}}"
             data-lser = "{{ match.lser}}"
             data-lrec = "{{ match.lrec}}"
             data-ltotal = "{{ match.ltotal}}"
@@ -256,39 +256,34 @@
         </tr>
         
         {% elif match.status == 'sched' %}
-        <tr class = 'table-warning'>  
+        <tr class = 'table-warning'  
+            data-id = "{{ forloop.counter }}"
+            data-winner = "{{ match.winner }}"
+            data-wdfault = "{{ match.wdfault }}"
+            data-waces = "{{ match.waces}}"
+            data-wsera = "{{ match.wser1}}"
+            data-wserb = "{{ match.wser2}}"
+            data-wser = "{{ match.wser}}"
+            data-wrec = "{{ match.wrec}}"
+            data-wtotal = "{{ match.wtotal}}"
+        
+            data-loser = "{{ match.loser}}"
+            data-ldfault = "{{ match.ldfault }}"
+            data-laces = "{{ match.laces}}"
+            data-lsera = "{{ match.lser1}}"
+            data-lserb = "{{ match.lser1}}"
+            data-lser = "{{ match.lser}}"
+            data-lrec = "{{ match.lrec}}"
+            data-ltotal = "{{ match.ltotal}}"
+        >
             <td> {{ forloop.counter }} </td> 
-            <td> {{ match.date|date:'m-d' }} </td>
+            <td > {{ match.date | date:'m-d ' }} </td>
             <td> {{ match.round }} </td>
+            <td> {{ match.tournament}} </td>
             <td> {{ match.location }} </td>
-            <td> {{ match.tournament_name }} </td>
             <td> {{ match.status }} </td>
-            <td> - </td>
-            <td> - </td>
-            <td> <h3> - </h3> </td>
-            <td> <h3> - </h3> </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-        </tr>
-
-        {% elif match.status == 'live' %}
-        <tr class='table-danger'>
-            <td> {{ forloop.counter }} </td> 
-            <td> {{ match.date|date:'m-d' }} </td>
-            <td> {{ match.round }} </td>
-            <td> {{ match.location }} </td>
-            <td> {{ match.tournament_name }} </td>
-            <td> {{ match.status }} </td>
-            <td> {{ match.winner }} </td>
-            <td> {{ match.loser }} </td>
+            <td style="color:red;"> {{ match.winner }} </td>
+            <td style="color:grey;"> {{ match.loser }} </td>
             <td> <h3> {{ match.wsets }} </h3> </td>
             <td> <h3> {{ match.lsets }} </h3> </td>
             <td> {{ match.w1 }} </td>
@@ -301,6 +296,95 @@
             <td> {{ match.l4 }} </td>
             <td> {{ match.w5 }} </td>
             <td> {{ match.l5 }} </td>
+            <td> {{ match.totalsets }} </td>
+            <td> {{ match.totalgames }} </td>
+            <td> {{ match.bestof }} </td>
+            <td> {{ match.comment }} </td>
+            {% if match.home == match.winner %}
+                <td style="color:red;"> {{ match.home }} </td>
+                <td style="color:grey;"> {{ match.away }} </td>
+            {% else %}
+                <td style="color:grey;"> {{ match.home }} </td>
+                <td style="color:red;"> {{ match.away }} </td>
+            {% endif %}
+            <td> {{ match.waces }} </td>
+            <td> {{ match.laces }} </td>
+            <td> {{ match.wser1 }} </td>
+            <td> {{ match.lser1 }} </td>
+            <td> {{ match.wser2 }} </td>
+            <td> {{ match.lser2 }} </td>
+            <td> {{ match.wser }} </td>
+            <td> {{ match.lser }} </td>
+            <td> {{ match.wrec }} </td>
+            <td> {{ match.lrec }} </td>
+            <td> {{ match.wtotal }} </td>
+            <td> {{ match.ltotal }} </td>
+        </tr>
+
+        {% elif match.status == 'live' %}
+        <tr class='table-danger'
+            data-id = "{{ forloop.counter }}"
+            data-winner = "{{ match.winner }}"
+            data-wdfault = "{{ match.wdfault }}"
+            data-waces = "{{ match.waces}}"
+            data-wsera = "{{ match.wser1}}"
+            data-wserb = "{{ match.wser2}}"
+            data-wser = "{{ match.wser}}"
+            data-wrec = "{{ match.wrec}}"
+            data-wtotal = "{{ match.wtotal}}"
+        
+            data-loser = "{{ match.loser}}"
+            data-ldfault = "{{ match.ldfault }}"
+            data-laces = "{{ match.laces}}"
+            data-lsera = "{{ match.lser1}}"
+            data-lserb = "{{ match.lser1}}"
+            data-lser = "{{ match.lser}}"
+            data-lrec = "{{ match.lrec}}"
+            data-ltotal = "{{ match.ltotal}}"
+        >
+            <td> {{ forloop.counter }} </td> 
+            <td > {{ match.date | date:'m-d ' }} </td>
+            <td> {{ match.round }} </td>
+            <td> {{ match.tournament}} </td>
+            <td> {{ match.location }} </td>
+            <td> {{ match.status }} </td>
+            <td style="color:red;"> {{ match.winner }} </td>
+            <td style="color:grey;"> {{ match.loser }} </td>
+            <td> <h3> {{ match.wsets }} </h3> </td>
+            <td> <h3> {{ match.lsets }} </h3> </td>
+            <td> {{ match.w1 }} </td>
+            <td> {{ match.l1 }} </td>
+            <td> {{ match.w2 }} </td>
+            <td> {{ match.l2 }} </td>
+            <td> {{ match.w3 }} </td>
+            <td> {{ match.l3 }} </td>
+            <td> {{ match.w4 }} </td>
+            <td> {{ match.l4 }} </td>
+            <td> {{ match.w5 }} </td>
+            <td> {{ match.l5 }} </td>
+            <td> {{ match.totalsets }} </td>
+            <td> {{ match.totalgames }} </td>
+            <td> {{ match.bestof }} </td>
+            <td> {{ match.comment }} </td>
+            {% if match.home == match.winner %}
+                <td style="color:red;"> {{ match.home }} </td>
+                <td style="color:grey;"> {{ match.away }} </td>
+            {% else %}
+                <td style="color:grey;"> {{ match.home }} </td>
+                <td style="color:red;"> {{ match.away }} </td>
+            {% endif %}
+            <td> {{ match.waces }} </td>
+            <td> {{ match.laces }} </td>
+            <td> {{ match.wser1 }} </td>
+            <td> {{ match.lser1 }} </td>
+            <td> {{ match.wser2 }} </td>
+            <td> {{ match.lser2 }} </td>
+            <td> {{ match.wser }} </td>
+            <td> {{ match.lser }} </td>
+            <td> {{ match.wrec }} </td>
+            <td> {{ match.lrec }} </td>
+            <td> {{ match.wtotal }} </td>
+            <td> {{ match.ltotal }} </td>
         </tr>
         {% endif %}
         

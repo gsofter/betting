@@ -396,25 +396,26 @@ def get_match_detail_from_url(soup):
 		ltotal = p1_total_pts
 
 	detail = {
-		'waces' 			: waces,
-		'wdfault' 	: wdfault, 
+		'waces' 		: waces,
+		'wdfault' 		: wdfault, 
 		'wser1' 		: wser1,
 		'wser2' 		: wser2,
-		'wser' 		: wser,
-		'wrec' 		: wrec,
+		'wser' 			: wser,
+		'wrec' 			: wrec,
 		'wtotal' 		: wtotal,
-		'laces' 			: laces,
-		'ldfault' 	: ldfault, 
+		'laces' 		: laces,
+		'ldfault' 		: ldfault, 
 		'lser1' 		: lser1,
 		'lser2' 		: lser2,
-		'lser' 		: lser,
-		'lrec' 		: lrec,
+		'lser' 			: lser,
+		'lrec' 			: lrec,
+		'ltotal'		: ltotal,
 		'home' 			: '',
 		'away' 			: '',
-		'home_country' 		: '',
-		'away_country' 		: '',
-		'date' : None,
-		'tournament' : '',
+		'home_country' 	: '',
+		'away_country' 	: '',
+		'date' 			: None,
+		'tournament'	: '',
 	}
 	return detail
 
@@ -429,7 +430,7 @@ def get_atp_match_from_flashresultat():
 	_options.add_argument('--no-sandbox')
 	_options.add_argument('--disable-dev-shm-usage')
 
-	browser = webdriver.Chrome(executable_path="c:/chromedriver/chromedriver.exe", chrome_options=_options)
+	browser = webdriver.Chrome(chrome_options=_options)
 	browser.get(url)
 	sleep(5)
 	#navigate to the previous day

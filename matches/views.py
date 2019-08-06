@@ -126,9 +126,7 @@ def update_atp_perform(request):
     results = matchscrapping.get_atp_match_from_flashresultat()
     for performdata in results:
         try:
-            old_matches = ATPPlayer.objects.filter(home = performdata['home'], 
-                                                    away = performdata['away'], 
-                                                    date = performdata['date'])
+            old_matches = ATPMatch.objects.all().filter(home = performdata['home'],away = performdata['away'])
             #Check whether it exists or not in database
             if len(old_matches) > 0:
                 old_m = old_matches[0]
