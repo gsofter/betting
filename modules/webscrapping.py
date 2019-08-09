@@ -25,123 +25,33 @@ def filter_duplicates(news_list):
 			return_list.append(item)
 	return return_list
 
-def get_news(soup):
-	# letters = soup.findAll('div', class_='thumb-info')
-	letters = soup.findAll('article')
-	# letters = soup.findAll('div', ['a','h3', 'p'], class_='thumb-info')
-	listOfWords=['sporting', 'bruno', 'carvalho', 'william', 'adrien', 'palhinha', 'alvalade', 'patrício',
-				'bas', 'dost', 'leões', 'leonino', 'jesus', 'schelotto', 'jefferson', 'coates', 'douglas',
-				'marvin', 'zeegelaar', 'semedo', 'esgaio', 'campbell', 'ruiz', 'castaignos', 'gelson', 'matheus']
-
-	container = letters[0]
-	titleText1 = container.h1.a.getText()
-
-	news_ = []
-	new_item = [container.h1.a.getText(), container.h1.a.getText()]
-	news_.append(new_item)
-
-	for index in range(1,10):
-		item = letters[index]
-		new_item = [item.h1.a.getText(), item.p.getText()]
-		news_.append(new_item)
-
-	# for elm in letters:
-	# 	notbox = elm.find('div', class_ = 'noticia_box')
-		
-	# 	item_content = notbox.p.text
-	# 	new_item = ["", item_content]
-	# 	news_.append(new_item)
-
-	news_ = filter_duplicates(news_)
-
-	to_return = []
-	id_counter=1
-	for elm in news_:
-		tmp = {}
-		tmp['link']="#"
-		tmp['title'] = elm[0]
-		tmp['content'] = elm[1]
-		tmp['id'] = id_counter
-		id_counter+=1
-		to_return.append(tmp)
-		
-	return to_return
-
-def get_news_full_text(link):
-	r = urllib.request.urlopen(link).read()
-	soup = BeautifulSoup(r, 'lxml')
-
-	return_ = {}
-
-	#News header
-	news_header_ = {}
-	news_header = soup.findAll('div', ['h1','p'], class_='article-header clearfix')
-	count=0
-	for elm in news_header:
-		if(count==0):
-			try:
-				title_ = elm.find('h1').getText()
-				title_mini_ = elm.find('p').getText()
-				news_header_['title'] = title_
-				news_header_['title_mini'] = title_mini_
-			except:
-				pass
-		else:
-			break
-		count+=1
-	return_['header'] = news_header_
-	
-	#News photo
-	news_photo_ = {}
-	news_photo = soup.findAll('div', ['img'], class_= 'article-photo clearfix')
-	for elm in news_photo:
-		try:
-			news_photo_['photo_url'] = elm.find('img')['src']
-			news_photo_['photo_alt'] = elm.find('img')['alt']
-		except:
-			pass
-	return_['photo'] = news_photo_
-
-	#News content
-	news_content_ = {}
-	news_content = soup.findAll('div', class_='col-xs-12 article-main')
-	count=0
-	for elm in news_content:
-		if(count==0):
-			try:
-				news_content_['content'] = elm.find('p').getText()
-			except:
-				pass
-		else:
-			break
-		count+=1
-	return_['content'] = news_content_
-
-	# print(return_)
-	return return_
-
-
-def run():
-	r = urllib.request.urlopen('https://www.record.pt/futebol/futebol-nacional/liga-nos/sporting').read()
-	soup = BeautifulSoup(r, 'lxml')
-
-	news_ = get_news(soup)
-	print(news_)
-
-	# print(news_)
-	# get_news_full_text('http://www.record.pt/futebol/futebol-nacional/liga-nos/sporting/detalhe/ruben-e-gelson-reavaliados-amanha.html')
-	return news_
 
 #extract the matches data from the soup
 def fetch_matches(soup):
 	items = soup.find_all('div', id=True, attrs={'class' : re.compile("match_line")})
 	print(items)
 
-def get_upcoming_match():
-	r = urllib.request.urlopen('https://www.xscores.com/tennis').read()
+def get_atp_players_xscores():
+	r = urllib.request.urlopen('https://www.xscores.com/tennis/rankings/atp-s/top-100').read()
 	soup = BeautifulSoup(r, 'lxml')
-	matches_ = fetch_matches(soup)
-	return matches_
+	players = []
+	elements = soup.find_all('div', class_="score_row")
+	for ele in elements:
+		txt = ele.find_all('div')[3].text.strip()
+		name = txt[:txt.index('(')-1]
+		players.append(name)
+	return players
+
+def get_wta_players_xscores():
+	r = urllib.request.urlopen('https://www.xscores.com/tennis/rankings/wta-s/top-100').read()
+	soup = BeautifulSoup(r, 'lxml')
+	players = []
+	elements = soup.find_all('div', class_="score_row")
+	for ele in elements:
+		txt = ele.find_all('div')[3].text.strip()
+		name = txt[:txt.index('(')-1]
+		players.append(name)
+	return players
 
 
 def get_formatted_name(str):
@@ -210,8 +120,8 @@ def fetch_players(soup):
 		else :
 			max_rank= int(max_rank_text, 10)
 		
-		name = tds[3].text.strip()
-		name = get_formatted_name(name)
+		origin_name = tds[3].text.strip()
+		name = get_formatted_name(origin_name)
 		country = ele.attrs['class'][0]
 		age = int(tds[4].next, 10)
 		pts_str = tds[6].text.strip()
@@ -241,6 +151,7 @@ def fetch_players(soup):
 			'prev_tournament' : prev_tournament,
 			'next_pts' : next_pts,
 			'max_pts'	: max_pts,
+			'origin_name' : origin_name,
 		}
 		players_.append(new_player)
 	return players_
@@ -262,4 +173,5 @@ def get_wta_players():
 	return players_
 
 if __name__ == '__main__':
-	get_wta_players()
+	#get_wta_players()
+	get_atp_players_xscores()
