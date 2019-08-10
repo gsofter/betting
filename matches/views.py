@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .serializers import matchSerializer
 from .models import Match, ATPMatch
-from modules import matchscrapping
+from modules import matchscrapping, oddscraping
 
 class matchList(APIView):
     def get(self, arges):
@@ -149,3 +149,9 @@ def update_atp_perform(request):
         except:
             print(performdata['home'])
     return HttpResponse("<h1> Success </h1>")
+
+def atp_odd_list(request):
+    odds_data = oddscraping.get_odds_data()
+    context = odds_data['atp']
+    print('asdf')
+    return render(request, template_name="odd_list.html")
