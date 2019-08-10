@@ -15,7 +15,7 @@ class ATPPlayer(models.Model):
     prev_tournament = models.CharField(max_length=50, null=True)
     next_pts = models.IntegerField(null=True)
     max_pts = models.IntegerField(null=True)
-    
+    nicknames = models.CharField(max_length=1000, null = True)
     def __str__(self):
         return self.name
 
@@ -35,6 +35,6 @@ class WTAPlayer(models.Model):
     prev_tournament = models.CharField(max_length=50, null=True)
     next_pts = models.IntegerField(null=True)
     max_pts = models.IntegerField(null=True)
-
+    nicknames = models.CharField(max_length=1000, null = True)
     def __str__(self):
         return self.name

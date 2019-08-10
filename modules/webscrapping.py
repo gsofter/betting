@@ -25,28 +25,32 @@ def filter_duplicates(news_list):
 			return_list.append(item)
 	return return_list
 
-
-def run():
-	r = urllib.request.urlopen('https://www.record.pt/futebol/futebol-nacional/liga-nos/sporting').read()
-	soup = BeautifulSoup(r, 'lxml')
-
-	news_ = get_news(soup)
-	print(news_)
-
-	# print(news_)
-	# get_news_full_text('http://www.record.pt/futebol/futebol-nacional/liga-nos/sporting/detalhe/ruben-e-gelson-reavaliados-amanha.html')
-	return news_
-
 #extract the matches data from the soup
 def fetch_matches(soup):
 	items = soup.find_all('div', id=True, attrs={'class' : re.compile("match_line")})
 	print(items)
 
-def get_upcoming_match():
-	r = urllib.request.urlopen('https://www.xscores.com/tennis').read()
+def get_atp_players_xscores():
+	r = urllib.request.urlopen('https://www.xscores.com/tennis/rankings/atp-s/top-100').read()
 	soup = BeautifulSoup(r, 'lxml')
-	matches_ = fetch_matches(soup)
-	return matches_
+	players = []
+	elements = soup.find_all('div', class_="score_row")
+	for ele in elements:
+		txt = ele.find_all('div')[3].text.strip()
+		name = txt[:txt.index('(')-1]
+		players.append(name)
+	return players
+
+def get_wta_players_xscores():
+	r = urllib.request.urlopen('https://www.xscores.com/tennis/rankings/wta-s/top-100').read()
+	soup = BeautifulSoup(r, 'lxml')
+	players = []
+	elements = soup.find_all('div', class_="score_row")
+	for ele in elements:
+		txt = ele.find_all('div')[3].text.strip()
+		name = txt[:txt.index('(')-1]
+		players.append(name)
+	return players
 
 
 def get_formatted_name(str):
@@ -115,8 +119,8 @@ def fetch_players(soup):
 		else :
 			max_rank= int(max_rank_text, 10)
 		
-		name = tds[3].text.strip()
-		name = get_formatted_name(name)
+		origin_name = tds[3].text.strip()
+		name = get_formatted_name(origin_name)
 		country = ele.attrs['class'][0]
 		age = int(tds[4].next, 10)
 		pts_str = tds[6].text.strip()
@@ -146,6 +150,7 @@ def fetch_players(soup):
 			'prev_tournament' : prev_tournament,
 			'next_pts' : next_pts,
 			'max_pts'	: max_pts,
+			'origin_name' : origin_name,
 		}
 		players_.append(new_player)
 	return players_
@@ -167,4 +172,5 @@ def get_wta_players():
 	return players_
 
 if __name__ == '__main__':
-	get_wta_players()
+	#get_wta_players()
+	get_atp_players_xscores()
