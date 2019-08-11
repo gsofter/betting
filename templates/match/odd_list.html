@@ -2,5 +2,27 @@
 
 {% block  content %}
 <h1> ATP Odds list </h1>
-
+<div class="container">
+    {% for odd in odds %}
+    <div class="panel-group">
+            
+        <div class="panel panel-primary">
+            <div class="panel-heading panel-primary">{{ odd.tournament }} </div>
+            <table class="table table-info">
+                <thead class="table">
+                    <th> &nbsp; </th>
+                    <th> {{ odd.home }} </th>
+                    <th> {{ odd.away }} </th>
+                </thead>
+                <tbody>
+                <tbody>
+                    <tr> <td> Betclic </td> <td> {{ odd.bcw }} </td> <td> {{ odd.bcl }} </td> </tr> 
+                    <tr> <td> Unibet </td> <td> {{ odd.ubw }} </td> <td> {{ odd.ubl }} </td> </tr> 
+                    <tr> <td> Winamax </td> <td> {{ odd.maxw }} </td> <td> {{ odd.maxl }} </td> </tr> 
+                </tbody> 
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock  %}

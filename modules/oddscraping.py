@@ -26,6 +26,7 @@ def fetch_odds(url):
 	r1 = urlopen(req1).read()
 	soup = BeautifulSoup(r1, 'lxml')
 	table = soup.find('div', id='oddetail')
+	tourname = table.h1.text.strip()
 	rows = table.select('tr')
 	
 	i = 0
@@ -34,8 +35,7 @@ def fetch_odds(url):
 		home = row.select('td')[0].select('.matchname a:nth-of-type(1)')[0].text
 		away = row.select('td')[0].select('.matchname a:nth-of-type(2)')[0].text
 
-		row = rows[i + 1]
-		items = row.select('td.bet')		
+		row = rows[i + 1]		
 		odd1 = float(row.select('td.bet')[0].text.strip())
 		odd2 = float(row.select('td.bet')[1].text.strip())
 		bcw = odd1
@@ -68,10 +68,11 @@ def fetch_odds(url):
 			'ubl' : ubl,
 			'maxw' : maxw,
 			'maxl' : maxl,
+			'tournament' : tourname, 
 		}
 
 		odds.append(odd)
-		i = i + 8
+		i = i + int(rows[i].td.attrs['rowspan'])
 	return odds
 
 def get_odds_data():

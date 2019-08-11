@@ -33,8 +33,8 @@ urlpatterns = [
     path('match/wta', wta_match_list, name="wta_match_list"),
 
     #odds math
-    path('match/odd_atp', atp_match_list, name="atp_odds_list"),
-    path('match/odd_wta', wta_match_list, name="wta_odds_list"),
+    path('match/odd_atp', atp_odd_list, name="atp_odds_list"),
+    path('match/odd_wta', wta_odd_list, name="wta_odds_list"),
     
     #tournaments pathes
     path('tour/atp/', atp_tournament_list, name="atp_tour_list"),

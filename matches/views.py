@@ -55,6 +55,23 @@ def wta_match_list(request):
 def match_home(request):
     return HttpResponse("<h1> Welcome matches </h1>")
 
+def atp_odd_list(request):
+    odds_data = oddscraping.get_odds_data()
+    data = odds_data['atpodds']
+    context = {
+        'odds' : data,
+    }
+    return render(request, template_name="match/odd_list.html", context=context)
+
+
+def wta_odd_list(request):
+    odds_data = oddscraping.get_odds_data()
+    data = odds_data['wtaodds']
+    context = {
+        'odds' : data,
+    }
+    return render(request, template_name="match/odd_list.html", context=context)
+
 #HTTP requests processor
 def update_atp_match(request):
     matches = matchscrapping.get_atp_matches_from_xscores()
@@ -149,9 +166,3 @@ def update_atp_perform(request):
         except:
             print(performdata['home'])
     return HttpResponse("<h1> Success </h1>")
-
-def atp_odd_list(request):
-    odds_data = oddscraping.get_odds_data()
-    context = odds_data['atp']
-
-    return render(request, template_name="odd_list.html", context=context)
