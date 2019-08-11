@@ -153,5 +153,5 @@ def update_atp_perform(request):
 def atp_odd_list(request):
     odds_data = oddscraping.get_odds_data()
     context = odds_data['atp']
-    print('asdf')
-    return render(request, template_name="odd_list.html")
+
+    return render(request, template_name="odd_list.html", context=context)

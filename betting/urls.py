@@ -30,8 +30,12 @@ urlpatterns = [
     path('match/', match_list, name="match_list"),
     path('matches/', matchList.as_view(),name="match_list_api"),
     path('match/atp', atp_match_list, name="atp_match_list"),
-    path('match/atp', wta_match_list, name="wta_match_list"),
+    path('match/wta', wta_match_list, name="wta_match_list"),
 
+    #odds math
+    path('match/odd_atp', atp_match_list, name="atp_odds_list"),
+    path('match/odd_wta', wta_match_list, name="wta_odds_list"),
+    
     #tournaments pathes
     path('tour/atp/', atp_tournament_list, name="atp_tour_list"),
     path('tour/wta/', wta_tournament_list, name="wta_tour_list"),
@@ -43,4 +47,5 @@ urlpatterns = [
     path('match/update_atp_match/', update_atp_match, name='update_atp_match'),
     path('match/remove_atp_match/', remove_atp_match, name='remove_atp_match'),
     path('match/update_atp_perform/', update_atp_perform, name='update_atp_perform'),
+
 ]
