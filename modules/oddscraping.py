@@ -35,30 +35,36 @@ def fetch_odds(url):
 		home = row.select('td')[0].select('.matchname a:nth-of-type(1)')[0].text
 		away = row.select('td')[0].select('.matchname a:nth-of-type(2)')[0].text
 
-		row = rows[i + 1]		
+		cnt = i + 1
+		while cnt < len(rows):
+			rowd = rows[cnt]
+			if rowd.has_attr('class') == False: #when it is new match item
+				break
+			if rowd.attrs['title'].find("Betclic") != -1:
+				row_bc = cnt
+			elif rowd.attrs['title'].find("Unibet") != -1:
+				row_ub = cnt
+			elif rowd.attrs['title'].find("Winamax") != -1:
+				row_max = cnt
+			cnt = cnt + 1
+		row = rows[row_bc]		
 		odd1 = float(row.select('td.bet')[0].text.strip())
 		odd2 = float(row.select('td.bet')[1].text.strip())
 		bcw = odd1
 		bcl = odd2
-		if odd1 < odd2:
-			bcw = odd2
-			bcl = odd1 
-		row = rows[i+3]
+		 
+		row = rows[row_ub]
 		odd1 = float(row.select('td.bet')[0].text.strip())
 		odd2 = float(row.select('td.bet')[1].text.strip())
 		ubw = odd1
 		ubl = odd2
-		if odd1 < odd2:
-			ubw = odd2
-			ubl = odd1
-		row = rows[i+4]
+		
+		row = rows[row_max]
 		odd1 = float(row.select('td.bet')[0].text.strip())
 		odd2 = float(row.select('td.bet')[1].text.strip())
 		maxw = odd1
 		maxl = odd2
-		if odd1 < odd2:
-			maxw = odd2
-			maxl = odd1
+		
 		odd = {
 			'home' : home,
 			'away' : away,

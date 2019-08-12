@@ -419,8 +419,8 @@ def get_match_detail_from_url(soup):
 	}
 	return detail
 
+#get performance data
 def get_atp_match_from_flashresultat():
-	
 	url = "https://www.flashresultats.fr/tennis/"
 
 	#options for not displaying the chrome browser
@@ -434,8 +434,9 @@ def get_atp_match_from_flashresultat():
 	browser.get(url)
 	sleep(5)
 	#navigate to the previous day
-	prev_div = browser.find_element_by_css_selector('div.calendar__nav')
+	prev_div = browser.find_element_by_css_selector('div.calendar__direction.calendar__direction--yesterday')
 	prev_div.click()
+	sleep(3)
 	soup = BeautifulSoup(browser.page_source, 'lxml')
 	header_divs = soup.find_all('div', class_="event__header")
 	
@@ -489,7 +490,7 @@ def get_atp_match_from_flashresultat():
 			tour_div_cls_arr = tour_div.attrs['class']
 			if "event__match" not in tour_div_cls_arr:
 				break
-
+	browser.quit()
 	return details
 
 if __name__ == '__main__':

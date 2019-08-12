@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from .serializers import matchSerializer
 from .models import Match, ATPMatch
+from players.models import ATPPlayer, WTAPlayer
 from modules import matchscrapping, oddscraping
 
 class matchList(APIView):
@@ -75,11 +76,43 @@ def wta_odd_list(request):
 #HTTP requests processor
 def update_atp_match(request):
     matches = matchscrapping.get_atp_matches_from_xscores()
+    
+    #filter match player names with player database
+    for match in matches:
+        home = match['home'].upper()
+        away = match['away'].upper()
+        try:
+            home_player = ATPPlayer.objects.filter(nicknames__contains=home)
+            away_player = ATPPlayer.objects.filter(nicknames__contains=away)
+            
+            if len(home_player) > 0:
+                match['home'] = home_player[0].name
+            else:
+                print(home)
+
+            if len(away_player) > 0:
+                match['away'] = away_player[0].name
+            else:
+                print(away)
+
+            #check if home is winner or loser
+            if home == match['winner'].upper():
+                match['winner'] = match['home']
+            elif home == match['loser'].upper():
+                match['loser'] = match['home']
+
+            #check if away is winner or loser
+            if away == match['winner'].upper():
+                match['winner'] = match['away']
+            elif away == match['loser'].upper():
+                match['loser'] = match['away']
+        except:
+            print(home)
+
     for match in matches:
         try:
-            old_matches = ATPPlayer.objects.filter(home = match['home'], 
-                                                    away = match['away'], 
-                                                    date = match['date'])
+            old_matches = ATPMatch.objects.filter(home = match['home'], 
+                                                    away = match['away'])
             #Check whether it exists or not in database
             if len(old_matches) > 0:
                 old_m = old_matches[0]
@@ -141,6 +174,37 @@ def remove_atp_match(request):
 
 def update_atp_perform(request):
     results = matchscrapping.get_atp_match_from_flashresultat()
+    for match in results:
+        home = match['home'].upper()
+        away = match['away'].upper()
+        try:
+            home_player = ATPPlayer.objects.filter(nicknames__contains=home)
+            away_player = ATPPlayer.objects.filter(nicknames__contains=away)
+            
+            if len(home_player) > 0:
+                match['home'] = home_player[0].name
+            else:
+                print(home)
+
+            if len(away_player) > 0:
+                match['away'] = away_player[0].name
+            else:
+                print(away)
+
+            # if home player wins
+            if home == match['winner'].upper():
+                match['winner'] = match['home']
+            elif home == match['loser'].upper():
+                match['loser'] = match['home']
+                
+            # if away player wins or not
+            if away == match['winner'].upper():
+                match['winner'] = match['away']
+            elif away == match['loser'].upper():
+                match['loser'] = match['away']
+        except:
+            print(home)
+        
     for performdata in results:
         try:
             old_matches = ATPMatch.objects.all().filter(home = performdata['home'],away = performdata['away'])

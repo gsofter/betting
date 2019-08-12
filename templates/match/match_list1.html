@@ -9,11 +9,13 @@
             type : "GET", // http method
             success : function(json) {
                 console.log("success"); // another sanity check
+                alert('success');
             },
 
             // handle a non-successful response
             error : function(xhr,errmsg,err) {                
                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                alert('failed');
             }
         });
     }
@@ -25,11 +27,13 @@
                 type : "GET", // http method
                 success : function(json) {
                     console.log("success"); // another sanity check
+                    alert('success');
                 },
 
                 // handle a non-successful response
                 error : function(xhr,errmsg,err) {                
                     console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                    alert('failed');
                 }
             });
         }
@@ -69,20 +73,20 @@
             $('#winner').text($(this).attr('data-winner'));
             $('#wdfault').text($(this).attr('data-wdfault'));
             $('#waces').text($(this).attr('data-waces'));
-            $('#wser1').text($(this).attr('data-wser1'));
-            $('#wser2').text($(this).attr('data-wser2'));
-            $('#wser').text($(this).attr('data-wser'));
-            $('#wrec').text($(this).attr('data-wrec'));
-            $('#wtotal').text($(this).attr('data-wtotal'));
+            $('#wser1').text($(this).attr('data-wser1') + '%');
+            $('#wser2').text($(this).attr('data-wser2') + '%');
+            $('#wser').text($(this).attr('data-wser')+ '%');
+            $('#wrec').text($(this).attr('data-wrec')+ '%');
+            $('#wtotal').text($(this).attr('data-wtotal')+ '%');
             
             $('#loser').text($(this).attr('data-loser'));
             $('#ldfault').text($(this).attr('data-ldfault'));
             $('#laces').text($(this).attr('data-laces'));
-            $('#lser1').text($(this).attr('data-lser1'));
-            $('#lser2').text($(this).attr('data-lser2'));
-            $('#lser').text($(this).attr('data-lser'));
-            $('#lrec').text($(this).attr('data-lrec'));
-            $('#ltotal').text($(this).attr('data-ltotal'));
+            $('#lser1').text($(this).attr('data-lser1')+ '%');
+            $('#lser2').text($(this).attr('data-lser2')+ '%');
+            $('#lser').text($(this).attr('data-lser')+ '%');
+            $('#lrec').text($(this).attr('data-lrec')+ '%');
+            $('#ltotal').text($(this).attr('data-ltotal')+ '%');
             $("#detailModal").modal();
         });
         
@@ -195,8 +199,8 @@
             data-winner = "{{ match.winner }}"
             data-wdfault = "{{ match.wdfault }}"
             data-waces = "{{ match.waces}}"
-            data-wsera = "{{ match.wser1}}"
-            data-wserb = "{{ match.wser2}}"
+            data-wser1 = "{{ match.wser1}}"
+            data-wser2 = "{{ match.wser2}}"
             data-wser = "{{ match.wser}}"
             data-wrec = "{{ match.wrec}}"
             data-wtotal = "{{ match.wtotal}}"
@@ -204,8 +208,8 @@
             data-loser = "{{ match.loser}}"
             data-ldfault = "{{ match.ldfault }}"
             data-laces = "{{ match.laces}}"
-            data-lsera = "{{ match.lser1}}"
-            data-lserb = "{{ match.lser1}}"
+            data-lser1 = "{{ match.lser1}}"
+            data-lser2 = "{{ match.lser2}}"
             data-lser = "{{ match.lser}}"
             data-lrec = "{{ match.lrec}}"
             data-ltotal = "{{ match.ltotal}}"
