@@ -36,9 +36,26 @@ class AtpMatchScrapyPipeline(object):
         if 'atpmatch' not in getattr(spider, 'pipelines', []):
             return item
         try:
-            match = ATPMatch.objects.get(home=item["home"], away=item['away'])
-            print (match.home  + " already exist")
-            match.rank = item['rank']
+            home = item['home'].upper()
+            away = item['away'].upper()
+            try:
+                home_player = ATPPlayer.objects.get(nicknames__contains=home)
+                away_player = ATPPlayer.objects.get(nicknames__contains=away)
+            
+                if home_player is not None and away_player is not None:
+                    item['home'] = home_player.name
+                    item['away'] = away_player.name
+                else:
+                    print ('home or away player is not listed in the players list')
+                    self.export_to_file(item)
+                    return item
+            except ATPPlayer.DoesNotExist:
+                print('home or away player does not exist on the players list')
+                self.export_to_file(item)
+                return item
+            
+            match = ATPMatch.objects.get(home=item["home"], away=item['away'], date=item['date'])
+            print (match.home + 'vs'+ match.away + match.date.strftime('%d-%b-%Y')  + " already exist")
             match.round = item['round']
             match.date = item['date']
             match.home = item['home']
@@ -67,3 +84,8 @@ class AtpMatchScrapyPipeline(object):
             pass
         item.save()
         return item
+    def export_to_file(self, item):
+        file = open('players.txt', 'a+')
+        file.write(item['home'] + "\r\n")
+        file.write(item['away'] + "\r\n")
+        file.close()

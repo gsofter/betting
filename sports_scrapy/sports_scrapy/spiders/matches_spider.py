@@ -42,26 +42,31 @@ class AtpMatchSpider(scrapy.Spider):
                 item = AtpMatchItem()
                 item['home'] = home
                 item['away'] = away
-                item['home_r1'] = -1
-                item['home_r2'] = -1
-                item['home_r3'] = -1
-                item['home_r4'] = -1
-                item['home_r5'] = -1
-                item['home_winsets'] = -1
-                item['away_r1'] = -1
-                item['away_r2'] = -1
-                item['away_r3'] = -1
-                item['away_r4'] = -1
-                item['away_r5'] = -1
-                item['away_winsets'] = -1
-                item['round'] = round
                 item['date'] = date
+            #common fields
+                item['round'] = round
+                item['winner'] = winner
+                item['loser'] = loser
                 item['tournament'] = tournament
                 item['location'] = location
                 item['comment'] = match_status
                 item['status'] = match_status
                 item['totalgames'] = totalgames
                 item['bestof'] = 3
+            #home player fields
+                item['home_r1'] = -1
+                item['home_r2'] = -1
+                item['home_r3'] = -1
+                item['home_r4'] = -1
+                item['home_r5'] = -1
+                item['home_winsets'] = -1
+            #away player fields
+                item['away_r1'] = -1
+                item['away_r2'] = -1
+                item['away_r3'] = -1
+                item['away_r4'] = -1
+                item['away_r5'] = -1
+                item['away_winsets'] = -1
                 yield item
                 continue
         #winsets
@@ -109,11 +114,21 @@ class AtpMatchSpider(scrapy.Spider):
                 totalgames += home_r2 + away_r2 
             if home_r1 != -1 and away_r1 != -1:
                 totalgames += home_r1 + away_r1
-        
-                
+    
             item = AtpMatchItem()
             item['home'] = home
             item['away'] = away
+            item['date'] = date
+        #common fields
+            item['round'] = round
+            item['winner'] = winner
+            item['loser'] = loser
+            item['tournament'] = tournament
+            item['location'] = location
+            item['comment'] = match_status
+            item['status'] = match_status
+            item['totalgames'] = totalgames
+            item['bestof'] = 3
         #home fields
             item['home_r1'] = home_r1
             item['home_r2'] = home_r2
@@ -128,17 +143,6 @@ class AtpMatchSpider(scrapy.Spider):
             item['away_r4'] = away_r4
             item['away_r5'] = away_r5
             item['away_winsets'] = away_winsets
-        #common fields
-            item['round'] = round
-            item['date'] = date
-            item['winner'] = winner
-            item['loser'] = loser
-            item['tournament'] = tournament
-            item['location'] = location
-            item['comment'] = match_status
-            item['status'] = match_status
-            item['totalgames'] = totalgames
-            item['bestof'] = 3
             yield item
 
     def get_teamname_from_str(self, str):

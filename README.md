@@ -16,7 +16,8 @@ python manage.py runserver
 ## resource urls
 
 player data: https://live-tennis.eu/fr/classement-atp-live
-sports data: 
-
+sports data:
+https://www.xscores.com/tennis/ 
 http://www.tennisendirect.net/atp/match/rafael-nadal-VS-daniil-medvedev/coupe-rogers-montreal-2019/
+
 
