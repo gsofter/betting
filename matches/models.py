@@ -49,61 +49,60 @@ class ATPMatch(models.Model):
     location = models.CharField(max_length=50, null=True) #Location name
     winner = models.CharField(max_length = 20, null=True) ## of games in the match
     loser = models.CharField(max_length = 20, null=True) ## of games in the match
-    w1 = models.IntegerField( null=True) #Number of games won in the match by winner
-    l1 = models.IntegerField( null=True) #Number of games won in the match by loser
-    w2 = models.IntegerField( null=True) #Number of games won in the match by winner
-    l2 = models.IntegerField( null=True) #Number of games won in the match by loser
-    w3 = models.IntegerField( null=True) #Number of games won in the match by winner
-    l3 = models.IntegerField( null=True) #Number of games won in the match by loser
-    w4 = models.IntegerField( null=True) #Number of games won in the match by winner
-    l4 = models.IntegerField( null=True) #Number of games won in the match by loser
-    w5 = models.IntegerField( null=True) #Number of games won in the match by winner
-    l5 = models.IntegerField( null=True) #Number of games won in the match by loser
-    wsets = models.IntegerField( null=True) #Number of sets won by winner
-    lsets = models.IntegerField( null=True) #Number of sets won by loser
+    home_r1 = models.IntegerField( null=True) #Number of games won in the match by Home player
+    away_r1 = models.IntegerField( null=True) #Number of games won in the match by Away player
+    home_r2 = models.IntegerField( null=True) #Number of games won in the match by Home player
+    away_r2 = models.IntegerField( null=True) #Number of games won in the match by Away player
+    home_r3 = models.IntegerField( null=True) #Number of games won in the match by Home player
+    away_r3 = models.IntegerField( null=True) #Number of games won in the match by Away player
+    home_r4 = models.IntegerField( null=True) #Number of games won in the match by Home player
+    away_r4 = models.IntegerField( null=True) #Number of games won in the match by Away player
+    home_r5 = models.IntegerField( null=True) #Number of games won in the match by Home player
+    away_r5 = models.IntegerField( null=True) #Number of games won in the match by Away player
+    home_winsets = models.IntegerField( null=True) #Number of sets won by Home player
+    away_winsets = models.IntegerField( null=True) #Number of sets won by Away player
     totalsets = models.IntegerField(null=True) # wsets + lsets
     totalgames = models.IntegerField(null=True) # w1 + l1 + w2 + l2 + w3 + l3 + w4 + l4 + w5 + l5
     bestof = models.IntegerField(null=True)    # 3 , 5
-    comment = models.CharField(max_length=50, null=True) #Number of sets won by loser
+    comment = models.CharField(max_length=50, null=True) #Number of sets won by Away player
     status = models.CharField(max_length = 50, null=True)
     
     #home, away player
     home = models.CharField(max_length=50, null=True)
     away = models.CharField(max_length=50, null=True)
     
-    #winner match performance data
-    waces = models.CharField(max_length=50, null=True) #Winner Aces
-    wdfault = models.CharField(max_length=50, null=True) #Winner Double Fault
-    wser1 = models.IntegerField(null=True)    #Winner 1st Serve points Won
-    wser2 = models.IntegerField(null=True)    #Winner 2nd Serve points Won
-    wser = models.IntegerField(null=True)    #Winner Serve games won
-    wrec = models.IntegerField(null=True)   #Winner recevier points won
-    wtotal = models.IntegerField(null=True) #Winner total game points
+    #Home player match performance data
+    home_aces = models.CharField(max_length=50, null=True) #Home player Aces
+    home_doublefault = models.CharField(max_length=50, null=True) #Home player Double Fault
+    home_ser1 = models.IntegerField(null=True)    #Home player 1st Serve points Won
+    home_ser2 = models.IntegerField(null=True)    #Home player 2nd Serve points Won
+    homs_ser = models.IntegerField(null=True)    #Home player Serve games won
+    home_rec = models.IntegerField(null=True)   #Home player recevier points won
+    home_total = models.IntegerField(null=True) #Home player total game points
     
-    #loser match performance data
-    laces = models.CharField(max_length=50, null=True)    #Loser Aces
-    ldfault = models.CharField(max_length=50, null=True) # Loser Double Default
-    lser1 = models.IntegerField(null=True)  #Loser 1St Serve Points won
-    lser2 = models.IntegerField(null=True)  #Loser 2nd Server Points won
-    lser = models.IntegerField(null=True)  #Loser Serve won games
-    lrec = models.IntegerField(null=True)   #Loser receiver points won
-    ltotal = models.IntegerField(null=True) #Loser total points won
+    #Away player match performance data
+    away_aces = models.CharField(max_length=50, null=True)    #Away player Aces
+    away_doublefault = models.CharField(max_length=50, null=True) # Away player Double Default
+    away_ser1 = models.IntegerField(null=True)  #Away player 1St Serve Points won
+    away_ser2 = models.IntegerField(null=True)  #Away player 2nd Server Points won
+    away_ser = models.IntegerField(null=True)  #Away player Serve won games
+    away_rec = models.IntegerField(null=True)   #Away player receiver points won
+    away_total = models.IntegerField(null=True) #Away player total points won
 
     #odds data
-    b365w = models.FloatField(blank=True, null=True)     # bet365 winner odds
-    b356l = models.FloatField( blank=True, null=True)    # bet365 loser odds
-    psw = models.FloatField( blank=True, null=True)     # Pinnacles Sports odds of match winner
-    psl = models.FloatField( blank=True, null=True)     # Pinnacles Sports odds of match loser
-    maxw = models.FloatField( blank=True, null=True)    # Winamax Sports odds of match winner
-    maxl = models.FloatField( blank=True, null=True)    # Winamax Sports odds of match loser
+    home_b365 = models.FloatField(blank=True, null=True)     # bet365 Home player odds
+    away_b356 = models.FloatField( blank=True, null=True)    # bet365 Away player odds
+    home_ps = models.FloatField( blank=True, null=True)     # Pinnacles Sports odds of match Home player
+    away_ps = models.FloatField( blank=True, null=True)     # Pinnacles Sports odds of match Away player
+    home_winamax = models.FloatField( blank=True, null=True)    # Winamax Sports odds of match Home player
+    away_winamax = models.FloatField( blank=True, null=True)    # Winamax Sports odds of match Away player
     
-    ubw = models.FloatField( blank=True, null=True)    # Unibet  Sports odds of match winner
-    ubl = models.FloatField( blank=True, null=True)    # Unibet  Sports odds of match loser
-    bcw = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match winner
-    bcl = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match loser
-    avgw = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match winner
-    avgl = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match loser
+    home_unibet = models.FloatField( blank=True, null=True)    # Unibet  Sports odds of match Home player
+    away_unibet = models.FloatField( blank=True, null=True)    # Unibet  Sports odds of match Away player
+    home_betclic = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match Home player
+    away_betclic = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match Away player
+    home_avg = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Home player
+    away_avg = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Away player
     
     def __str__(self):
         return self.home + " vs " + self.away
-

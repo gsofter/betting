@@ -138,5 +138,12 @@ def get_odds_data():
 	print("it took" + str(time.time() - start) + "seconds to analyze the data.")
 	return result
 
+def get_bet365_odd():
+	url = "https://www.bet365.com/"
+	req = Request(url, headers={'User-Agent' : 'Mozilla/5.0'})
+	r = urlopen(req).read()
+	soup = BeautifulSoup(r, 'lxml')
+	return []
 if __name__ == '__main__':
-	get_odds_data()
+	#get_odds_data()
+	get_bet365_odd()

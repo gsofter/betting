@@ -95,17 +95,6 @@ def update_atp_match(request):
             else:
                 print(away)
 
-            #check if home is winner or loser
-            if home == match['winner'].upper():
-                match['winner'] = match['home']
-            elif home == match['loser'].upper():
-                match['loser'] = match['home']
-
-            #check if away is winner or loser
-            if away == match['winner'].upper():
-                match['winner'] = match['away']
-            elif away == match['loser'].upper():
-                match['loser'] = match['away']
         except:
             print(home)
 
@@ -121,18 +110,18 @@ def update_atp_match(request):
                 old_m.loser = match['loser']
                 old_m.status = match['status']
                 old_m.comment = match['comment']
-                old_m.w1 = match['w1']
-                old_m.l1 = match['l1']
-                old_m.w2 = match['w2']
-                old_m.l2 = match['l2']
-                old_m.w3 = match['w3']
-                old_m.l3 = match['l3']
-                old_m.w4 = match['w4']
-                old_m.l4 = match['l4']
-                old_m.w5 = match['w5']
-                old_m.l5 = match['l5']
-                old_m.wsets = match['wsets']
-                old_m.lsets = match['lsets']
+                old_m.home_r1 = match['home_r1']
+                old_m.away_r1 = match['away_r1']
+                old_m.home_r2 = match['home_r2']
+                old_m.away_r2 = match['away_r2']
+                old_m.home_r3 = match['home_r3']
+                old_m.away_r3 = match['away_r3']
+                old_m.home_r4 = match['home_r4']
+                old_m.away_r4 = match['away_r4']
+                old_m.home_r5 = match['home_r5']
+                old_m.away_r5 = match['away_r5']
+                old_m.home_winsets = match['home_winsets']
+                old_m.away_winsets = match['away_winsets']
                 old_m.totalsets = match['totalsets']
                 old_m.totalgames = match['totalgames']
                 old_m.bestof = match['bestof']
@@ -150,18 +139,18 @@ def update_atp_match(request):
         new_m.away = match['away']
         new_m.winner = match['winner']
         new_m.loser = match['loser']
-        new_m.w1 = match['w1']
-        new_m.l1 = match['l1']
-        new_m.w2 = match['w2']
-        new_m.l2 = match['l2']
-        new_m.w3 = match['w3']
-        new_m.l3 = match['l3']
-        new_m.w4 = match['w4']
-        new_m.l4 = match['l4']
-        new_m.w5 = match['w5']
-        new_m.l5 = match['l5']
-        new_m.wsets = match['wsets']
-        new_m.lsets = match['lsets']
+        new_m.home_r1 = match['home_r1']
+        new_m.away_r1 = match['away_r1']
+        new_m.home_r2 = match['home_r2']
+        new_m.away_r2 = match['away_r2']
+        new_m.home_r3 = match['home_r3']
+        new_m.away_r3 = match['away_r3']
+        new_m.home_r4 = match['home_r4']
+        new_m.away_r4 = match['away_r4']
+        new_m.home_r5 = match['home_r5']
+        new_m.away_r5 = match['away_r5']
+        new_m.home_winsets = match['home_winsets']
+        new_m.away_winsets = match['away_winsets']
         new_m.totalsets = match['totalsets']
         new_m.totalgames = match['totalgames']
         new_m.bestof = match['bestof']
@@ -173,60 +162,4 @@ def remove_atp_match(request):
     return HttpResponse("<h1> Success </h1>")
 
 def update_atp_perform(request):
-    results = matchscrapping.get_atp_match_from_flashresultat()
-    for match in results:
-        home = match['home'].upper()
-        away = match['away'].upper()
-        try:
-            home_player = ATPPlayer.objects.filter(nicknames__contains=home)
-            away_player = ATPPlayer.objects.filter(nicknames__contains=away)
-            
-            if len(home_player) > 0:
-                match['home'] = home_player[0].name
-            else:
-                print(home)
-
-            if len(away_player) > 0:
-                match['away'] = away_player[0].name
-            else:
-                print(away)
-
-            # if home player wins
-            if home == match['winner'].upper():
-                match['winner'] = match['home']
-            elif home == match['loser'].upper():
-                match['loser'] = match['home']
-                
-            # if away player wins or not
-            if away == match['winner'].upper():
-                match['winner'] = match['away']
-            elif away == match['loser'].upper():
-                match['loser'] = match['away']
-        except:
-            print(home)
-        
-    for performdata in results:
-        try:
-            old_matches = ATPMatch.objects.all().filter(home = performdata['home'],away = performdata['away'])
-            #Check whether it exists or not in database
-            if len(old_matches) > 0:
-                old_m = old_matches[0]
-                old_m.waces = performdata['waces']
-                old_m.wdfault = performdata['wdfault']
-                old_m.wser1 = performdata['wser1']
-                old_m.wser2 = performdata['wser2']
-                old_m.wser = performdata['wser']
-                old_m.wrec = performdata['wrec']
-                old_m.wtotal = performdata['wtotal']
-                old_m.laces = performdata['laces']
-                old_m.ldfault = performdata['ldfault']
-                old_m.lser1 = performdata['lser1']
-                old_m.lser2 = performdata['lser2']
-                old_m.lser = performdata['lser']
-                old_m.lrec = performdata['lrec']
-                old_m.ltotal = performdata['ltotal']
-                old_m.save()
-                continue
-        except:
-            print(performdata['home'])
     return HttpResponse("<h1> Success </h1>")

@@ -70,23 +70,23 @@
                 }
             }); /**/
             console.log($(this).attr('data-waces'));
-            $('#winner').text($(this).attr('data-winner'));
-            $('#wdfault').text($(this).attr('data-wdfault'));
-            $('#waces').text($(this).attr('data-waces'));
-            $('#wser1').text($(this).attr('data-wser1') + '%');
-            $('#wser2').text($(this).attr('data-wser2') + '%');
-            $('#wser').text($(this).attr('data-wser')+ '%');
-            $('#wrec').text($(this).attr('data-wrec')+ '%');
-            $('#wtotal').text($(this).attr('data-wtotal')+ '%');
+            $('#home').text($(this).attr('data-home'));
+            $('#home_dfault').text($(this).attr('data-homedoublefault'));
+            $('#home_aces').text($(this).attr('data-home_aces'));
+            $('#home_ser1').text($(this).attr('data-home_ser1') + '%');
+            $('#home_ser2').text($(this).attr('data-home_ser2') + '%');
+            $('#home_ser').text($(this).attr('data-home_ser')+ '%');
+            $('#home_rec').text($(this).attr('data-home_rec')+ '%');
+            $('#home_total').text($(this).attr('data-home_total')+ '%');
             
-            $('#loser').text($(this).attr('data-loser'));
-            $('#ldfault').text($(this).attr('data-ldfault'));
-            $('#laces').text($(this).attr('data-laces'));
-            $('#lser1').text($(this).attr('data-lser1')+ '%');
-            $('#lser2').text($(this).attr('data-lser2')+ '%');
-            $('#lser').text($(this).attr('data-lser')+ '%');
-            $('#lrec').text($(this).attr('data-lrec')+ '%');
-            $('#ltotal').text($(this).attr('data-ltotal')+ '%');
+            $('#away').text($(this).attr('data-away'));
+            $('#home_dfault').text($(this).attr('data-away_doublefault'));
+            $('#home_aces').text($(this).attr('data-away_aces'));
+            $('#home_ser1').text($(this).attr('data-away_ser1')+ '%');
+            $('#home_ser2').text($(this).attr('data-away_ser2')+ '%');
+            $('#home_ser').text($(this).attr('data-away_ser')+ '%');
+            $('#home_rec').text($(this).attr('data-away_rec')+ '%');
+            $('#home_total').text($(this).attr('data-away_total')+ '%');
             $("#detailModal").modal();
         });
         
@@ -107,18 +107,18 @@
         <table class="container">
             <thead> 
                 <th>Cateogories</th>
-                <th>Winner</th>
-                <th>Loser</th>
+                <th>Home player</th>
+                <th>Away player</th>
             </thead>
             <tbody>
-                <tr><td> Name </td> <td id="winner"> </td> <td id="loser"> </td> </tr>
-                <tr><td> Double Fault </td> <td id="wdfault"> </td> <td id="ldfault"> </td> </tr>
-                <tr><td> Aces </td> <td id="waces"> </td> <td id="laces"> </td> </tr>
-                <tr><td> 1st Serve won </td> <td id="wser1"> </td> <td id="lser1"> </td> </tr>
-                <tr><td> 2nd Serve won </td> <td id="wser2"> </td> <td id="lser2"> </td> </tr>
-                <tr><td> Total Serve won </td> <td id="wser"> </td> <td id="lser"> </td> </tr>
-                <tr><td> Receive won </td> <td id="wrec"> </td> <td id="lrec"> </td> </tr>
-                <tr><td> Total  </td> <td id="wtotal"> </td> <td id="ltotal"> </td> </tr>
+                <tr><td> Name </td> <td id="home"> </td> <td id="away"> </td> </tr>
+                <tr><td> Double Fault </td> <td id="home_doublefault"> </td> <td id="away_doublefault"> </td> </tr>
+                <tr><td> Aces </td> <td id="home_aces"> </td> <td id="away_aces"> </td> </tr>
+                <tr><td> 1st Serve won </td> <td id="home_ser1"> </td> <td id="away_ser1"> </td> </tr>
+                <tr><td> 2nd Serve won </td> <td id="home_ser2"> </td> <td id="away_ser2"> </td> </tr>
+                <tr><td> Total Serve won </td> <td id="home_total"> </td> <td id="away_total"> </td> </tr>
+                <tr><td> Receive won </td> <td id="home_rec"> </td> <td id="away_rec"> </td> </tr>
+                <tr><td> Total  </td> <td id="home_total"> </td> <td id="away_total"> </td> </tr>
             </tbody>
         </table>
       </div>
@@ -147,16 +147,6 @@
     <th> Loser </th>
     <th> Wsets </th>
     <th> Lsets </th>
-    <th> W1 </th>
-    <th> L1 </th>
-    <th> W2 </th>
-    <th> L2 </th>
-    <th> W3 </th>
-    <th> L3 </th>
-    <th> W4 </th>
-    <th> L4 </th>
-    <th> W5 </th>
-    <th> L5 </th>
     <th> Total sets </th>
     <th> Total games </th>
     <th> Bestof </th>
@@ -164,55 +154,29 @@
     <th> Home </th>
     <th> Away </th>
 
-    <th> Waces </th>
-    <th> Laces </th>
-    <th> Wser1 </th>
-    <th> Lser1 </th>
-    <th> Wser2 </th>
-    <th> Lser2 </th>
-    <th> Wser </th>
-    <th> Lser </th>
-    <th> Wrec </th>
-    <th> Lrec </th>
-    <th> Wtotal </th>
-    <th> Ltotal </th>
-    
-    <th> B365w </th>
-    <th> B365l </th>
-    <th> PSW </th>
-    <th> PSL </th>
-    <th> Maxw </th>
-    <th> Maxl </th>
-    <th> Ubw </th>
-    <th> Ubl </th>
-    <th> Bcw </th>
-    <th> Bcl </th>
-    <th> Avgw </th>
-    <th> Avgl </th>
-
 </thead>
 <tbody >
     {% for match in matches %}
         {% if match.status == 'fin' %}
         <tr class = 'table-success table-row' 
             data-id = "{{ forloop.counter }}"
-            data-winner = "{{ match.winner }}"
-            data-wdfault = "{{ match.wdfault }}"
-            data-waces = "{{ match.waces}}"
-            data-wser1 = "{{ match.wser1}}"
-            data-wser2 = "{{ match.wser2}}"
-            data-wser = "{{ match.wser}}"
-            data-wrec = "{{ match.wrec}}"
-            data-wtotal = "{{ match.wtotal}}"
+            data-home = "{{ match.home }}"
+            data-home_doublefault = "{{ match.home_doublefault }}"
+            data-home_aces = "{{ match.home_aces}}"
+            data-home_ser1 = "{{ match.home_ser1}}"
+            data-home_ser2 = "{{ match.home_ser2}}"
+            data-home_ser = "{{ match.home_ser}}"
+            data-home_rec = "{{ match.home_rec}}"
+            data-home_total = "{{ match.home_total}}"
         
-            data-loser = "{{ match.loser}}"
-            data-ldfault = "{{ match.ldfault }}"
-            data-laces = "{{ match.laces}}"
-            data-lser1 = "{{ match.lser1}}"
-            data-lser2 = "{{ match.lser2}}"
-            data-lser = "{{ match.lser}}"
-            data-lrec = "{{ match.lrec}}"
-            data-ltotal = "{{ match.ltotal}}"
+            data-away = "{{ match.loser}}"
+            data-away_doublefault = "{{ match.away_doublefault }}"
+            data-away_aces = "{{ match.away_aces}}"
+            data-away_ser1 = "{{ match.away_ser1}}"
+            data-away_ser2 = "{{ match.away_ser2}}"
+            data-away_ser = "{{ match.away_ser}}"
+            data-away_rec = "{{ match.away_rec}}"
+            data-away_total = "{{ match.away_total}}"
         >
             <td> {{ forloop.counter }} </td> 
             <td > {{ match.date | date:'m-d ' }} </td>
@@ -222,18 +186,9 @@
             <td> {{ match.status }} </td>
             <td style="color:red;"> {{ match.winner }} </td>
             <td style="color:grey;"> {{ match.loser }} </td>
-            <td> <h3> {{ match.wsets }} </h3> </td>
-            <td> <h3> {{ match.lsets }} </h3> </td>
-            <td> {{ match.w1 }} </td>
-            <td> {{ match.l1 }} </td>
-            <td> {{ match.w2 }} </td>
-            <td> {{ match.l2 }} </td>
-            <td> {{ match.w3 }} </td>
-            <td> {{ match.l3 }} </td>
-            <td> {{ match.w4 }} </td>
-            <td> {{ match.l4 }} </td>
-            <td> {{ match.w5 }} </td>
-            <td> {{ match.l5 }} </td>
+            <td> <h3> {{ match.home_sets }} </h3> </td>
+            <td> <h3> {{ match.away_sets }} </h3> </td>
+
             <td> {{ match.totalsets }} </td>
             <td> {{ match.totalgames }} </td>
             <td> {{ match.bestof }} </td>
@@ -245,41 +200,11 @@
                 <td style="color:grey;"> {{ match.home }} </td>
                 <td style="color:red;"> {{ match.away }} </td>
             {% endif %}
-            <td> {{ match.waces }} </td>
-            <td> {{ match.laces }} </td>
-            <td> {{ match.wser1 }} </td>
-            <td> {{ match.lser1 }} </td>
-            <td> {{ match.wser2 }} </td>
-            <td> {{ match.lser2 }} </td>
-            <td> {{ match.wser }} </td>
-            <td> {{ match.lser }} </td>
-            <td> {{ match.wrec }} </td>
-            <td> {{ match.lrec }} </td>
-            <td> {{ match.wtotal }} </td>
-            <td> {{ match.ltotal }} </td>
+         
         </tr>
         
         {% elif match.status == 'sched' %}
-        <tr class = 'table-warning'  
-            data-id = "{{ forloop.counter }}"
-            data-winner = "{{ match.winner }}"
-            data-wdfault = "{{ match.wdfault }}"
-            data-waces = "{{ match.waces}}"
-            data-wsera = "{{ match.wser1}}"
-            data-wserb = "{{ match.wser2}}"
-            data-wser = "{{ match.wser}}"
-            data-wrec = "{{ match.wrec}}"
-            data-wtotal = "{{ match.wtotal}}"
-        
-            data-loser = "{{ match.loser}}"
-            data-ldfault = "{{ match.ldfault }}"
-            data-laces = "{{ match.laces}}"
-            data-lsera = "{{ match.lser1}}"
-            data-lserb = "{{ match.lser1}}"
-            data-lser = "{{ match.lser}}"
-            data-lrec = "{{ match.lrec}}"
-            data-ltotal = "{{ match.ltotal}}"
-        >
+        <tr class = 'table-warning'>
             <td> {{ forloop.counter }} </td> 
             <td > {{ match.date | date:'m-d ' }} </td>
             <td> {{ match.round }} </td>
@@ -288,18 +213,9 @@
             <td> {{ match.status }} </td>
             <td style="color:red;"> {{ match.winner }} </td>
             <td style="color:grey;"> {{ match.loser }} </td>
-            <td> <h3> {{ match.wsets }} </h3> </td>
-            <td> <h3> {{ match.lsets }} </h3> </td>
-            <td> {{ match.w1 }} </td>
-            <td> {{ match.l1 }} </td>
-            <td> {{ match.w2 }} </td>
-            <td> {{ match.l2 }} </td>
-            <td> {{ match.w3 }} </td>
-            <td> {{ match.l3 }} </td>
-            <td> {{ match.w4 }} </td>
-            <td> {{ match.l4 }} </td>
-            <td> {{ match.w5 }} </td>
-            <td> {{ match.l5 }} </td>
+            <td> <h3> {{ match.home_sets }} </h3> </td>
+            <td> <h3> {{ match.away_sets }} </h3> </td>
+            
             <td> {{ match.totalsets }} </td>
             <td> {{ match.totalgames }} </td>
             <td> {{ match.bestof }} </td>
@@ -311,41 +227,11 @@
                 <td style="color:grey;"> {{ match.home }} </td>
                 <td style="color:red;"> {{ match.away }} </td>
             {% endif %}
-            <td> {{ match.waces }} </td>
-            <td> {{ match.laces }} </td>
-            <td> {{ match.wser1 }} </td>
-            <td> {{ match.lser1 }} </td>
-            <td> {{ match.wser2 }} </td>
-            <td> {{ match.lser2 }} </td>
-            <td> {{ match.wser }} </td>
-            <td> {{ match.lser }} </td>
-            <td> {{ match.wrec }} </td>
-            <td> {{ match.lrec }} </td>
-            <td> {{ match.wtotal }} </td>
-            <td> {{ match.ltotal }} </td>
+           
         </tr>
 
         {% elif match.status == 'live' %}
-        <tr class='table-danger'
-            data-id = "{{ forloop.counter }}"
-            data-winner = "{{ match.winner }}"
-            data-wdfault = "{{ match.wdfault }}"
-            data-waces = "{{ match.waces}}"
-            data-wsera = "{{ match.wser1}}"
-            data-wserb = "{{ match.wser2}}"
-            data-wser = "{{ match.wser}}"
-            data-wrec = "{{ match.wrec}}"
-            data-wtotal = "{{ match.wtotal}}"
-        
-            data-loser = "{{ match.loser}}"
-            data-ldfault = "{{ match.ldfault }}"
-            data-laces = "{{ match.laces}}"
-            data-lsera = "{{ match.lser1}}"
-            data-lserb = "{{ match.lser1}}"
-            data-lser = "{{ match.lser}}"
-            data-lrec = "{{ match.lrec}}"
-            data-ltotal = "{{ match.ltotal}}"
-        >
+        <tr class='table-danger'>
             <td> {{ forloop.counter }} </td> 
             <td > {{ match.date | date:'m-d ' }} </td>
             <td> {{ match.round }} </td>
@@ -354,18 +240,8 @@
             <td> {{ match.status }} </td>
             <td style="color:red;"> {{ match.winner }} </td>
             <td style="color:grey;"> {{ match.loser }} </td>
-            <td> <h3> {{ match.wsets }} </h3> </td>
-            <td> <h3> {{ match.lsets }} </h3> </td>
-            <td> {{ match.w1 }} </td>
-            <td> {{ match.l1 }} </td>
-            <td> {{ match.w2 }} </td>
-            <td> {{ match.l2 }} </td>
-            <td> {{ match.w3 }} </td>
-            <td> {{ match.l3 }} </td>
-            <td> {{ match.w4 }} </td>
-            <td> {{ match.l4 }} </td>
-            <td> {{ match.w5 }} </td>
-            <td> {{ match.l5 }} </td>
+            <td> <h3> {{ match.home_sets }} </h3> </td>
+            <td> <h3> {{ match.away_sets }} </h3> </td>
             <td> {{ match.totalsets }} </td>
             <td> {{ match.totalgames }} </td>
             <td> {{ match.bestof }} </td>
@@ -377,21 +253,8 @@
                 <td style="color:grey;"> {{ match.home }} </td>
                 <td style="color:red;"> {{ match.away }} </td>
             {% endif %}
-            <td> {{ match.waces }} </td>
-            <td> {{ match.laces }} </td>
-            <td> {{ match.wser1 }} </td>
-            <td> {{ match.lser1 }} </td>
-            <td> {{ match.wser2 }} </td>
-            <td> {{ match.lser2 }} </td>
-            <td> {{ match.wser }} </td>
-            <td> {{ match.lser }} </td>
-            <td> {{ match.wrec }} </td>
-            <td> {{ match.lrec }} </td>
-            <td> {{ match.wtotal }} </td>
-            <td> {{ match.ltotal }} </td>
         </tr>
         {% endif %}
-        
     {% endfor %}
 </tbody>
 </table>

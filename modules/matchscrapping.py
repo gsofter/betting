@@ -62,29 +62,31 @@ def fetch_xcore_data(soup, type):
 				'away' : p2_name,
 				'winner' : '',
 				'loser' : '',
-				'w1' : -1,
-				'l1' : -1,
-				'w2' : -1,
-				'l2' : -1,
-				'w3' : -1,
-				'l3' : -1,
-				'w4' : -1,
-				'l4' : -1,
-				'w5' : -1,
-				'l5' : -1,
-				'wsets' : -1,
-				'lsets' : -1,
+				'home_r1' : -1,
+				'away_r1' : -1,
+				'home_r2' : -1,
+				'away_r2' : -1,
+				'home_r3' : -1,
+				'away_r3' : -1,
+				'home_r4' : -1,
+				'away_r4' : -1,
+				'home_r5' : -1,
+				'away_r5' : -1,
+				'home_winsets' : -1,
+				'away_winsets' : -1,
 				'totalsets' : -1,
 				'totalgames' : -1,
 				'bestof' : 3,
+				'home' : p1_name, 
+				'away' : p2_name,
 			}
 			matches.append(new_match)
 			continue
 
 		divset = ele.find_all('div', class_='score_ft score_cell centerTXT')[0]
 		if divset.find_all('div')[0].text != '-':	
-			p1_won_sets = int(divset.find_all('div')[0].text, 10)
-			p2_won_sets = int(divset.find_all('div')[1].text, 10)
+			p1_won_sets = int(divset.find_all('div')[0].next, 10)
+			p2_won_sets = int(divset.find_all('div')[1].next, 10)
 		else:
 			p1_won_sets = -1
 			p2_won_sets = -1
@@ -93,116 +95,65 @@ def fetch_xcore_data(soup, type):
 		loser = ""
 
 		divsets = ele.find_all('div', class_='score_ht score_cell centerTXT')
+
+		totalgames = 0
+		#set1
+		score_div1  = divsets[0]
+		if score_div1.find_all('div')[0].text != '-':	
+			home_r1 = int(score_div1.find_all('div')[0].next, 10)
+			away_r1 = int(score_div1.find_all('div')[1].next, 10)
+			totalgames += home_r1 + away_r1
+		else:
+			home_r1 = -1
+			away_r1 = -1
+		
+		#set2
+		score_div2  = divsets[1]
+		if score_div2.find_all('div')[0].text != '-':	
+			home_r2 = int(score_div2.find_all('div')[0].next, 10)
+			away_r2 = int(score_div2.find_all('div')[1].next, 10)
+			totalgames += home_r2 + away_r2
+		else:
+			home_r2 = -1
+			away_r2 = -1
+
+		#set3
+		score_div3  = divsets[2]
+		if score_div3.find_all('div')[0].text != '-':	
+			home_r3 = int(score_div3.find_all('div')[0].next, 10)
+			away_r3 = int(score_div3.find_all('div')[1].next, 10)
+			totalgames += home_r3 + away_r3
+		else: 
+			home_r3 = -1
+			away_r3 = -1
+
+		#set4
+		score_div4  = divsets[3]
+		if score_div4.find_all('div')[0].text != '-':	
+			home_r4 = int(score_div4.find_all('div')[0].next, 10)
+			away_r4 = int(score_div4.find_all('div')[1].next, 10)
+			totalgames += home_r4 + away_r4
+		else: 
+			home_r4 = -1
+			away_r4 = -1
+
+		#set5
+		score_div5  = divsets[4]
+		if score_div5.find_all('div')[0].text != '-':	
+			home_r5 = int(score_div5.find_all('div')[0].next, 10)
+			away_r5 = int(score_div5.find_all('div')[1].next, 10)
+			totalgames += home_r5 + away_r5
+		else: 
+			home_r5 = -1
+			away_r5 = -1
+				
 		if p1_won_sets > p2_won_sets:
 			winner = p1_name
 			loser = p2_name
-			wsets = p1_won_sets
-			lsets = p2_won_sets
-			#set1
-			score_div1  = divsets[0]
-			if score_div1.find_all('div')[0].text != '-':	
-				w1 = int(score_div1.find_all('div')[0].text, 10)
-				l1 = int(score_div1.find_all('div')[1].text, 10)
-			else:
-				w1 = -1
-				l1 = -1
-			
-			#set2
-			score_div2  = divsets[1]
-			if score_div2.find_all('div')[0].text != '-':	
-				w2 = int(score_div2.find_all('div')[0].text, 10)
-				l2 = int(score_div2.find_all('div')[1].text, 10)
-			else:
-				w2 = -1
-				l2 = -1
-
-			#set3
-			score_div3  = divsets[2]
-			if score_div3.find_all('div')[0].text != '-':	
-				w3 = int(score_div3.find_all('div')[0].text, 10)
-				l3 = int(score_div3.find_all('div')[1].text, 10)
-			else: 
-				w3 = -1
-				l3 = -1
-
-			#set4
-			score_div4  = divsets[3]
-			if score_div4.find_all('div')[0].text != '-':	
-				w4 = int(score_div4.find_all('div')[0].text, 10)
-				l4 = int(score_div4.find_all('div')[1].text, 10)
-			else: 
-				w4 = -1
-				l4 = -1
-
-			#set5
-			score_div5  = divsets[4]
-			if score_div5.find_all('div')[0].text != '-':	
-				w5 = int(score_div5.find_all('div')[0].text, 10)
-				l5 = int(score_div5.find_all('div')[1].text, 10)
-			else: 
-				w5 = -1
-				l5 = -1
 		else:
 			winner = p2_name
 			loser = p1_name
-			wsets = p2_won_sets
-			lsets = p1_won_sets
-			#set1
-			score_div1  = divsets[0]
-			if score_div1.find_all('div')[0].text != '-':	
-				l1 = int(score_div1.find_all('div')[0].text, 10)
-				w1 = int(score_div1.find_all('div')[1].text, 10)
-			else:
-				w1 = -1
-				l1 = -1
 			
-			#set2
-			score_div2  = divsets[1]
-			if score_div2.find_all('div')[0].text != '-':	
-				l2 = int(score_div2.find_all('div')[0].text, 10)
-				w2 = int(score_div2.find_all('div')[1].text, 10)
-			else:
-				l2 = -1
-				w2 = -1
-
-			#set3
-			score_div3  = divsets[2]
-			if score_div3.find_all('div')[0].text != '-':	
-				l3 = int(score_div3.find_all('div')[0].text, 10)
-				w3 = int(score_div3.find_all('div')[1].text, 10)
-			else: 
-				l3 = -1
-				w3 = -1
-
-			#set4
-			score_div4  = divsets[3]
-			if score_div4.find_all('div')[0].text != '-':	
-				l4 = int(score_div4.find_all('div')[0].text, 10)
-				w4 = int(score_div4.find_all('div')[1].text, 10)
-			else: 
-				l4 = -1
-				w4 = -1
-
-			#set5
-			score_div5  = divsets[4]
-			if score_div5.find_all('div')[0].text != '-':	
-				l5 = int(score_div5.find_all('div')[0].text, 10)
-				w5 = int(score_div5.find_all('div')[1].text, 10)
-			else: 
-				w5 = -1
-				l5 = -1
-		if w1 == -1 and l1 == -1:
-			total_games = 0
-		elif w2 == -1 and l2 == -1:
-			total_games = w1 + l1
-		elif w3 == -1 and l3 == -1:
-			total_games = w1 + l1 + w2 + l2
-		elif w4 == -1 and l4 == -1:
-			total_games = w1 + l1 + w2 + l2 + w3 + l3
-		elif w5 == -1 and l5 == -1:
-			total_games = w1 + l1 + w2 + l2 + w3 + l3 + w4 + l4
-		else:
-			total_games = w1 + l1 + w2 + l2 + w3 + l3 + w4 + l4 + w5 + l5
 		new_match = {
 			'date' : date,
 			'round' : round,
@@ -212,20 +163,20 @@ def fetch_xcore_data(soup, type):
 			'comment' : match_status,
 			'winner' : winner,
 			'loser' : loser,
-			'w1' : w1,
-			'l1' : l1,
-			'w2' : w2,
-			'l2' : l2,
-			'w3' : w3,
-			'l3' : l3,
-			'w4' : w4,
-			'l4' : l4,
-			'w5' : w5,
-			'l5' : l5,
-			'wsets' : wsets,
-			'lsets' : lsets,
-			'totalsets' : wsets + lsets,
-			'totalgames' : total_games,
+			'home_r1' : home_r1,
+			'away_r1' : away_r1,
+			'home_r2' : home_r2,
+			'away_r2' : away_r2,
+			'home_r3' : home_r3,
+			'away_r3' : away_r3,
+			'home_r4' : home_r4,
+			'away_r4' : away_r4,
+			'home_r5' : home_r5,
+			'away_r5' : away_r5,
+			'home_winsets' : p1_won_sets,
+			'away_winsets' : p2_won_sets,
+			'totalsets' : p1_won_sets + p1_won_sets,
+			'totalgames' : totalgames,
 			'bestof' : 3,
 			'home' : p1_name, 
 			'away' : p2_name,
@@ -240,21 +191,21 @@ def get_atp_matches_from_xscores():
 	r = urlopen(req).read()
 	soup = BeautifulSoup(r, 'lxml')
 	
-	prev_url = soup.find(class_="dateLeftArrow", attrs={'title':'Previous Day'}).a.attrs['href']
-	prev_day_url = urljoin(url, prev_url)
-	prev_r = urlopen(Request(prev_day_url, headers={'User-Agent' : 'Mozilla/5.0'})).read()
-	prev_soup = BeautifulSoup(prev_r, 'lxml')
+	# prev_url = soup.find(class_="dateLeftArrow", attrs={'title':'Previous Day'}).a.attrs['href']
+	# prev_day_url = urljoin(url, prev_url)
+	# prev_r = urlopen(Request(prev_day_url, headers={'User-Agent' : 'Mozilla/5.0'})).read()
+	# prev_soup = BeautifulSoup(prev_r, 'lxml')
 
-	next_url = soup.find(class_="dateRightArrow", attrs={'title':'Next Day'}).a.attrs['href']
-	next_day_url = urljoin(url, next_url)
-	next_r = urlopen(Request(next_day_url, headers={'User-Agent' : 'Mozilla/5.0'})).read()
-	next_soup = BeautifulSoup(next_r, 'lxml')
+	# next_url = soup.find(class_="dateRightArrow", attrs={'title':'Next Day'}).a.attrs['href']
+	# next_day_url = urljoin(url, next_url)
+	# next_r = urlopen(Request(next_day_url, headers={'User-Agent' : 'Mozilla/5.0'})).read()
+	# next_soup = BeautifulSoup(next_r, 'lxml')
 
 	today_matches = fetch_xcore_data(soup, 1)
-	prev_matches = fetch_xcore_data(prev_soup, 1)
-	next_matches = fetch_xcore_data(next_soup, 1)
-	matches_ = prev_matches + today_matches + next_matches
-	return matches_
+	# prev_matches = fetch_xcore_data(prev_soup, 1)
+	# next_matches = fetch_xcore_data(next_soup, 1)
+	# matches_ = prev_matches + today_matches + next_matches
+	return today_matches
 
 def get_wta_matches_from_xscores():
 	url = "https://www.xscores.com/tennis/"
@@ -494,5 +445,5 @@ def get_atp_match_from_flashresultat():
 	return details
 
 if __name__ == '__main__':
-	#get_atp_matches_from_xscores()
-	get_atp_match_from_flashresultat()
+	get_atp_matches_from_xscores()
+	# get_atp_match_from_flashresultat()

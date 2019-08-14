@@ -116,8 +116,12 @@ def fetch_players(soup):
 			max_rank = 0
 		elif max_rank_text.find('NCH') != -1:
 			max_rank = -1
-		else :
-			max_rank= int(max_rank_text, 10)
+		elif max_rank_text == 'MC':
+			max_rank = 0
+		elif max_rank_text.find('NMC') != -1:
+			max_rank = -1
+		elif bool(re.match('^(?=.*[a-zA-Z-])', max_rank_text)) != True:
+			max_rank = int(max_rank_text, 10)
 		
 		origin_name = tds[3].text.strip()
 		name = get_formatted_name(origin_name)
@@ -171,6 +175,17 @@ def get_wta_players():
 	players_ = fetch_players(soup)
 	return players_
 
+def get_match_detail():
+	url = "http://www.tennisendirect.net/atp/match/rafael-nadal-VS-daniil-medvedev/coupe-rogers-montreal-2019/"
+	req = Request(url, headers={'User-Agent' : 'Mozilla/4.0'})
+	r = urlopen(req).read()		
+	soup = BeautifulSoup(r, 'lxml')
+	table_ele = soup.find('table', class_='table_stats_match')
+
+	return []
+
 if __name__ == '__main__':
 	#get_wta_players()
-	get_atp_players_xscores()
+	# get_atp_players_xscores()
+	get_match_detail()
+
