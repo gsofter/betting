@@ -62,7 +62,6 @@ def get_formatted_name(str):
 			ch = 'Y'
 		if ch == 'Ž' or ch == 'Ż':
 			ch = 'Z'
-		
 		result += ch
 	return result
 
