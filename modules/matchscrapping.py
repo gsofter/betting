@@ -10,13 +10,7 @@ import unicodedata
 import smtplib
 #regular express library
 import re
-from urllib.request import Request, urlopen
-from urllib.parse import urljoin
-from selenium import webdriver
-
 from  datetime import datetime
-from selenium.webdriver.chrome.options import Options
-
 from time import sleep
 
 WINDOW_SIZE = "1920,1080"

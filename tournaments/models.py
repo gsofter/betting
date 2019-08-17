@@ -10,7 +10,7 @@ class ATPTournament(models.Model):
     series = models.CharField(max_length = 50, null = True)
     surface = models.CharField(max_length = 50, null = True)
     price = models.CharField(max_length = 50, null=True)
-    
+    nicknames = models.CharField(max_length = 50, null=True)
     def __str__(self):
         return self.name + ' ' + self.location
 
@@ -22,6 +22,6 @@ class WTATournament(models.Model):
     series = models.CharField(max_length = 50, null = True)
     surface = models.CharField(max_length = 50, null = True)
     price = models.CharField(max_length = 50, null=True)
-    
+    nicknames = models.CharField(max_length = 50, null=True)
     def __str__(self):
         return self.name + ' ' + self.location

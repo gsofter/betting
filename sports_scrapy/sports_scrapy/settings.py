@@ -68,6 +68,10 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
    'sports_scrapy.pipelines.AtpPlayerScrapyPipeline': 1,
    'sports_scrapy.pipelines.AtpMatchScrapyPipeline': 2,
+   'sports_scrapy.pipelines.AtpTournamentScrapyPipeline': 3,
+   'sports_scrapy.pipelines.WtaPlayerScrapyPipeline': 11,
+   'sports_scrapy.pipelines.WtaMatchScrapyPipeline': 12,
+   'sports_scrapy.pipelines.WtaTournamentScrapyPipeline': 13,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -85,7 +89,7 @@ ITEM_PIPELINES = {
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
+HTTPCACHE_ENABLED = False
 #HTTPCACHE_EXPIRATION_SECS = 0
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []

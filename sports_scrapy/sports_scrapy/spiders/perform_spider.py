@@ -14,8 +14,5 @@ class AtpPerformSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        
         return []
-
-
     
