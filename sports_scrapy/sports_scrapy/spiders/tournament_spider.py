@@ -9,6 +9,10 @@ from  datetime import datetime
 class AtpTournamentSpider(scrapy.Spider):
     pipelines = ['atptournament']
     name = 'atptournament'
+    custom_settings = {
+        'FEED_URI' : name + datetime.today().strftime("_%Y%m%d.csv"),
+        'FEED_FORMAT' : 'csv',
+    }
     start_urls = [
         'https://www.xscores.com/tennis/tournaments/atp-tour/2019',
     ]
@@ -52,6 +56,10 @@ class AtpTournamentSpider(scrapy.Spider):
 class WtaTournamentSpider(scrapy.Spider):
     pipelines = ['wtatournament']
     name = 'wtatournament'
+    custom_settings = {
+        'FEED_URI' : name + datetime.today().strftime("_%Y%m%d.csv"),
+        'FEED_FORMAT' : 'csv',
+    }
     start_urls = [
         'https://www.xscores.com/tennis/tournaments/wta-tour/2019',
     ]

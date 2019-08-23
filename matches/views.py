@@ -5,38 +5,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .serializers import matchSerializer
-from .models import Match, ATPMatch
+from .models import ATPMatch, WTAMatch
 from players.models import ATPPlayer, WTAPlayer
 from modules import matchscrapping, oddscraping
-
-class matchList(APIView):
-    def get(self, arges):
-        matches = Match.objects.all()[:25]
-        serializer = matchSerializer(matches, many=True)
-        return Response(serializer.data)
-        
-    def post(self):
-        pass
-
-def match_list(request):
-    match_list = Match.objects.all()
-    paginator = Paginator(match_list, 10)
-    page = request.GET.get('page', 1)
-    matches = paginator.get_page(page)
-
-    items_cnt = 0
-    if page == 1:
-        items_cnt = 0
-    else:
-        items_cnt = int(page,10) * 10
-    
-    context = {
-        'matches' : matches,
-        'items_cnt' : items_cnt, 
-        'page_number' : page, 
-    }    
-    return render(request, 'match/match_list.html', context)
+import xlrd
+import os
+import datetime
 
 def atp_match_list(request):
     #match_list = matchscrapping.get_atp_matches_from_xscores()
@@ -47,7 +21,7 @@ def atp_match_list(request):
     return render(request, 'match/match_list1.html', context)
 
 def wta_match_list(request):
-    match_list = matchscrapping.get_atp_matches_from_xscores()
+    match_list = ATPMatch.objects.all()[:100]
     context = {
         'matches' : match_list,
     }
@@ -163,3 +137,118 @@ def remove_atp_match(request):
 
 def update_atp_perform(request):
     return HttpResponse("<h1> Success </h1>")
+
+def load_xlsx(filepath):
+    # dirname = os.path.dirname(__file__)
+    # filename = os.path.join(dirname, 'atp/2019.xlsx')
+    book = xlrd.open_workbook(filepath)
+    sheet = book.sheet_by_index(0)
+    harr = []
+    for c in range(1, sheet.ncols):
+        harr.append(sheet.cell(0,c).value)
+
+    b365w_id =  harr.index("B365W") + 1
+    b365l_id =  harr.index("B365L") + 1
+    maxw_id =  harr.index("MaxW") + 1
+    maxl_id =  harr.index("MaxL") + 1
+    psw_id =  harr.index("PSW") + 1
+    psl_id =  harr.index("PSL") + 1
+    avgw_id = harr.index("AvgW") + 1
+    avgl_id = harr.index("AvgL") + 1
+
+    for r in range(1, sheet.nrows):
+        match = ATPMatch()
+        match.location	= sheet.cell(r,1).value
+        match.tournament	= sheet.cell(r,2).value
+        _date	= sheet.cell(r,3).value
+        match.date = datetime.datetime(*xlrd.xldate_as_tuple(_date, book.datemode))
+        
+        match.round = sheet.cell(r,7).value    
+        match.bestof = int(sheet.cell(r,8).value)    
+        match.winner = sheet.cell(r,9).value
+        match.loser = sheet.cell(r,10).value
+        match.home  = find_player(sheet.cell(r,9).value)
+        match.away = find_player(sheet.cell(r,10).value)
+        dup_match = find_duplicate(match.winner, match.loser, match.date)
+        if dup_match is not None:
+            continue
+
+        match.court = sheet.cell(r,5).value
+        match.surface = sheet.cell(r,6).value
+        # match.wrank = sheet.cell(r,11).value
+        # match.lrank = sheet.cell(r,12).value
+        # match.wpts = sheet.cell(r,13).value
+        # match.lpts = sheet.cell(r,14).value
+    
+        match.home_r1 = get_int_val(sheet.cell(r,15).value)
+        match.away_r1 = get_int_val(sheet.cell(r,16).value)
+        match.home_r2 = get_int_val(sheet.cell(r,17).value)
+        match.away_r2 = get_int_val(sheet.cell(r,18).value)
+        match.home_r3 = get_int_val(sheet.cell(r,19).value)
+        match.away_r3 = get_int_val(sheet.cell(r,20).value)
+        match.home_r4 = get_int_val(sheet.cell(r,21).value)
+        match.away_r4 = get_int_val(sheet.cell(r,22).value)
+        match.home_r5 = get_int_val(sheet.cell(r,23).value)
+        match.away_r5 = get_int_val(sheet.cell(r,24).value)
+        match.home_winsets = get_int_val(sheet.cell(r,25).value)
+        match.away_winsets = get_int_val(sheet.cell(r,26).value)
+        match.status = sheet.cell(r,27).value
+        if b365w_id != -1: 
+            match.home_b365 = sheet.cell(r,b365w_id).value
+        if b365w_id != -1:
+            match.away_b365 = sheet.cell(r,b365l_id).value
+        if maxw_id != -1:
+            match.home_winamax = sheet.cell(r,maxw_id).value
+        if maxl_id != -1:
+            match.away_winamax = sheet.cell(r,maxl_id).value
+        if psw_id != -1:
+            match.home_ps = sheet.cell(r,psw_id).value
+        if psl_id != -1:
+            match.away_ps = sheet.cell(r,psl_id).value
+        if avgw_id != -1:
+            match.home_avg = sheet.cell(r,avgw_id).value
+        if avgl_id != -1:
+            match.away_avg = sheet.cell(r,avgl_id).value
+
+        match.save()
+    return []
+def import_atp_match(request):
+    dirname = os.path.dirname(__file__)
+    atp_path = os.path.join(dirname, 'atp')
+    atpfiles = []
+    for r, d, f in os.walk(atp_path):
+        for file in f:
+            if '.xlsx' in file:
+                atpfiles.append(os.path.join(r, file))
+
+    for f in atpfiles:
+        load_xlsx(f)
+
+    context = {
+        "file_list": atpfiles,
+    }
+    return render(request, 'match/file_list.html', context)
+
+def find_player(str):
+    str = str.upper()
+    players = ATPPlayer.objects.filter(nicknames__contains=str)
+    if len(players) > 0:
+        player = players[0]
+        return player.name
+    else:
+        return ""
+
+def find_duplicate(winner, loser, date):
+    players = ATPMatch.objects.filter(winner=winner, loser=loser, date=date)
+    if len(players) > 0:
+        return players[0]
+    else:
+        return None
+
+def get_int_val(num):
+    result = 0
+    if num == '':
+        result = -1
+    else:
+        result = int(num)
+    return result

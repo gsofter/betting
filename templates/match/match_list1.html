@@ -130,7 +130,6 @@
   </div>
 </div>
 
-<div class="container"> <p> <a href='{% url 'home' %}'> Home </a> > <a href='{% url 'match_list' %}'>Match list</a> </p> </div>
 <h1> Matches list </h1>
 <button class="btn btn-success" onclick = "onBtnUpdate()"> Update Match </button>
 <button class="btn btn-danger" onclick = "onBtnDelete()"> Delete </button>
@@ -186,7 +185,7 @@
             <td> {{ match.status }} </td>
             <td style="color:red;"> {{ match.winner }} </td>
             <td style="color:grey;"> {{ match.loser }} </td>
-            <td> <h3> {{ match.home_sets }} </h3> </td>
+            
             <td> <h3> {{ match.away_sets }} </h3> </td>
 
             <td> {{ match.totalsets }} </td>

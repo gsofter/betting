@@ -47,15 +47,17 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
+# SPIDER_MIDDLEWARES = {
 #    'sports_scrapy.middlewares.SportsScrapySpiderMiddleware': 543,
-#}
+# }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'sports_scrapy.middlewares.SportsScrapyDownloaderMiddleware': 543,
-#}
+
+DOWNLOADER_MIDDLEWARES = {
+   # 'sports_scrapy.middlewares.SportsScrapyDownloaderMiddleware': 543,
+   'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 1,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -69,9 +71,14 @@ ITEM_PIPELINES = {
    'sports_scrapy.pipelines.AtpPlayerScrapyPipeline': 1,
    'sports_scrapy.pipelines.AtpMatchScrapyPipeline': 2,
    'sports_scrapy.pipelines.AtpTournamentScrapyPipeline': 3,
+   'sports_scrapy.pipelines.AtpPerformScrapyPipeline': 4,
+   'sports_scrapy.pipelines.AtpOddScrapyPipeline': 5,
+   
    'sports_scrapy.pipelines.WtaPlayerScrapyPipeline': 11,
    'sports_scrapy.pipelines.WtaMatchScrapyPipeline': 12,
    'sports_scrapy.pipelines.WtaTournamentScrapyPipeline': 13,
+   'sports_scrapy.pipelines.WtaPerformScrapyPipeline': 14,
+   'sports_scrapy.pipelines.WtaOddScrapyPipeline': 15,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

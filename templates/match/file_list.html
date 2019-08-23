@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block  content %}
+<!-- Modal -->
+    {% for file in file_list %}
+        <div class="row">
+            <p> {{ file }} </p>
+        </div>
+    {% endfor %}
+{% endblock  %}

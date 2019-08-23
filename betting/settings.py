@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mathfilters',
     'rest_framework',
+    'jet_django',
     #own
     'players',
     'matches',

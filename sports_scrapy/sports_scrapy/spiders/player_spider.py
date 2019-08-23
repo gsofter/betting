@@ -5,6 +5,7 @@ from sports_scrapy.items import AtpPlayerItem, WtaPlayerItem
 from bs4 import BeautifulSoup
 from time import sleep
 import time
+from datetime import datetime
 
 def get_pts_int(str):
     result = 0
@@ -84,6 +85,11 @@ def get_formatted_name(str):
 class AtpPlayerSpider(scrapy.Spider):
     pipelines = ["atpplayer"]
     name = 'atpplayer'
+    custom_settings = {
+        'FEED_URI' : name + datetime.today().strftime("_%Y%m%d.csv"),
+        'FEED_FORMAT' : 'csv',
+    }
+
     start_urls = [
         'https://live-tennis.eu/fr/classement-atp-live',
     ]
@@ -138,6 +144,10 @@ class AtpPlayerSpider(scrapy.Spider):
 class WtaPlayerSpider(scrapy.Spider):
     pipelines = ["wtaplayer"]
     name = 'wtaplayer'
+    custom_settings = {
+        'FEED_URI' : name + datetime.today().strftime("_%Y%m%d.csv"),
+        'FEED_FORMAT' : 'csv',
+    }
     start_urls = [
         'https://live-tennis.eu/fr/classement-wta-officiel',
     ]

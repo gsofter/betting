@@ -176,16 +176,26 @@ def get_wta_players():
 	return players_
 
 def get_match_detail():
-	url = "http://www.tennisendirect.net/atp/match/rafael-nadal-VS-daniil-medvedev/coupe-rogers-montreal-2019/"
-	req = Request(url, headers={'User-Agent' : 'Mozilla/4.0'})
+	url = "https://www.mightyape.co.nz/"
+	req = Request(url, headers={'User-Agent' : 'Mozilla/5.0'})
 	r = urlopen(req).read()		
 	soup = BeautifulSoup(r, 'lxml')
 	table_ele = soup.find('table', class_='table_stats_match')
 
 	return []
 
+def run_test():
+	url = "https://www.mightyape.co.nz/"
+	req = Request(url, headers={'User-Agent' : 'Mozilla/4.0'})
+	r = urlopen(req).read()		
+	soup = BeautifulSoup(r, 'lxml')
+	table_ele = soup.find('div', class_='owl-item')
+
+	return []
+
 if __name__ == '__main__':
 	#get_wta_players()
 	# get_atp_players_xscores()
-	get_match_detail()
+	# get_match_detail()
+	run_test()
 

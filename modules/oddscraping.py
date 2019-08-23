@@ -12,11 +12,7 @@ import smtplib
 import re
 from urllib.request import Request, urlopen
 from urllib.parse import urljoin
-from selenium import webdriver
-
 from  datetime import datetime
-from selenium.webdriver.chrome.options import Options
-
 from time import sleep
 import time
 
@@ -81,7 +77,7 @@ def fetch_odds(url):
 		i = i + int(rows[i].td.attrs['rowspan'])
 	return odds
 
-def get_odds_data():
+def get_atp_odds_data():
 	start = time.time()
 	url = "http://www.comparateur-de-cotes.fr/comparateur/tennis"
 	req = Request(url, headers={'User-Agent' : 'Mozilla/5.0'})
@@ -95,8 +91,6 @@ def get_odds_data():
 	divs = tennis_div.select('div.seperator')
 
 	atpodds = []
-	wtaodds = []
-
 	for div in divs:
 		temp_ele = div
 		while True:
@@ -130,13 +124,62 @@ def get_odds_data():
 						wtaodds = wtaodds + odds
 				else:
 					continue
-	result = {
-		"atpodds" : atpodds,
-		"wtaodds" : wtaodds,
-	}
+	
 
 	print("it took" + str(time.time() - start) + "seconds to analyze the data.")
-	return result
+	return atpodds
+
+def get_wta_odds_data():
+	start = time.time()
+	url = "http://www.comparateur-de-cotes.fr/comparateur/tennis"
+	req = Request(url, headers={'User-Agent' : 'Mozilla/5.0'})
+	r = urlopen(req).read()	
+	print("it took" + str(time.time() - start) + "seconds to load data.")
+	start = time.time()
+	soup = BeautifulSoup(r, 'lxml')
+	print("it took" + str(time.time() - start) + "seconds to parse data.")
+	start = time.time()
+	tennis_div = soup.find('div', class_="sportdiv", id="d2")
+	divs = tennis_div.select('div.seperator')
+
+	atpodds = []
+	for div in divs:
+		temp_ele = div
+		while True:
+			temp_ele = temp_ele.nextSibling
+			if temp_ele is None:
+				break
+			if temp_ele == '\n':
+				continue
+			if len(temp_ele.attrs) == 0 and temp_ele.name == 'div':
+				title_div = temp_ele.find('div', class_='subhead')
+				#Analyze the match title whether contains "ATP Tour"
+				if title_div.text.find('ATP Tour') != -1:	
+					lis = temp_ele.find_all('li')
+					for li in lis:		
+						href = li.find('a').attrs['href']
+						if href.find('Doubles') != -1:
+							continue
+						suburl = href.split('/')[2]
+						new_url = url + "/" + suburl
+						odds = fetch_odds(new_url)
+						atpodds = atpodds + odds
+				elif title_div.text.find('WTA Tour') != -1:
+					lis = temp_ele.find_all('li')
+					for li in lis:
+						href = li.find('a').attrs['href']
+						if href.find('Doubles') != -1:
+							continue
+						suburl = href.split('/')[2]
+						new_url = url + "/" + suburl
+						odds = fetch_odds(new_url)
+						wtaodds = wtaodds + odds
+				else:
+					continue
+	
+
+	print("it took" + str(time.time() - start) + "seconds to analyze the data.")
+	return atpodds
 
 def get_bet365_odd():
 	url = "https://www.bet365.com/"

@@ -28,3 +28,41 @@ class AtpTournamentItem(DjangoItem):
 
 class WtaTournamentItem(DjangoItem):
     django_model = WTATournament
+
+class AtpPerformItem(scrapy.Item):
+    home = scrapy.Field()
+    away = scrapy.Field()
+    date = scrapy.Field()
+    home_aces = scrapy.Field()
+    home_doublefault = scrapy.Field()
+    home_total = scrapy.Field()
+    home_ser = scrapy.Field()
+    home_ser1 = scrapy.Field()
+    home_ser2 = scrapy.Field()
+    home_rec = scrapy.Field()
+    away_aces = scrapy.Field()
+    away_doublefault = scrapy.Field()
+    away_total = scrapy.Field()
+    away_ser = scrapy.Field()
+    away_ser1 = scrapy.Field()
+    away_ser2 = scrapy.Field()
+    away_rec = scrapy.Field()
+
+class WtaPerformItem(scrapy.Item):
+    home = scrapy.Field()
+    away = scrapy.Field()
+    date = scrapy.Field()
+    home_aces = scrapy.Field()
+    home_doublefault = scrapy.Field()
+    home_total = scrapy.Field()
+    home_ser = scrapy.Field()
+    home_ser1 = scrapy.Field()
+    home_ser2 = scrapy.Field()
+    home_rec = scrapy.Field()
+    away_aces = scrapy.Field()
+    away_doublefault = scrapy.Field()
+    away_total = scrapy.Field()
+    away_ser = scrapy.Field()
+    away_ser1 = scrapy.Field()
+    away_ser2 = scrapy.Field()
+    away_rec = scrapy.Field()

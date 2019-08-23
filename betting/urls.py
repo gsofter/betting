@@ -19,16 +19,13 @@ from django.urls import include, path
 from .views import homepage
 from players.views import player_index
 from matches.views import *
-from matches.views import matchList, atp_match_list, wta_match_list
 from tournaments.views import atp_tournament_list,  wta_tournament_list
 
 urlpatterns = [
     path('', homepage, name="home"),
     path('player/',include('players.urls', namespace='player')),
 
-    #match pathes
-    path('match/', match_list, name="match_list"),
-    path('matches/', matchList.as_view(),name="match_list_api"),
+    #match pathes   
     path('match/atp', atp_match_list, name="atp_match_list"),
     path('match/wta', wta_match_list, name="wta_match_list"),
 
@@ -47,5 +44,7 @@ urlpatterns = [
     path('match/update_atp_match/', update_atp_match, name='update_atp_match'),
     path('match/remove_atp_match/', remove_atp_match, name='remove_atp_match'),
     path('match/update_atp_perform/', update_atp_perform, name='update_atp_perform'),
-
+    path('match/import_atp', import_atp_match, name="import_atp_match"),
+    #jet admin urls
+    path('jet_api/', include('jet_django.urls')),
 ]

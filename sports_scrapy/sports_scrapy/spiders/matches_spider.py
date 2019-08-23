@@ -24,6 +24,12 @@ def get_score_from_str(str):
 class AtpMatchSpider(scrapy.Spider):
     pipelines = ['atpmatch']
     name = 'atpmatch'
+    log_name = name
+    custom_settings = {
+        'FEED_URI' : name + datetime.today().strftime("_%Y%m%d.csv"),
+        'FEED_FORMAT' : 'csv',
+    }
+    
     start_urls = [
         'https://www.xscores.com/tennis/',
     ]
@@ -168,6 +174,12 @@ class AtpMatchSpider(scrapy.Spider):
 class WtaMatchSpider(scrapy.Spider):
     pipelines = ['wtamatch']
     name = 'wtamatch'
+    
+    custom_settings = {
+        'FEED_URI' : name + datetime.today().strftime("_%Y%m%d.csv"),
+        'FEED_FORMAT' : 'csv',
+    }
+
     start_urls = [
         'https://www.xscores.com/tennis/',
     ]
