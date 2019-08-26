@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 from .views import homepage
 from players.views import player_index
@@ -22,6 +22,11 @@ from matches.views import *
 from tournaments.views import atp_tournament_list,  wta_tournament_list
 
 urlpatterns = [
+    #admin paths
+    path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+    path('admin/', admin.site.urls),
+
     path('', homepage, name="home"),
     path('player/',include('players.urls', namespace='player')),
 
@@ -37,14 +42,15 @@ urlpatterns = [
     path('tour/atp/', atp_tournament_list, name="atp_tour_list"),
     path('tour/wta/', wta_tournament_list, name="wta_tour_list"),
 
-    #admin paths
-    path('admin/', admin.site.urls),
-
     #http requests
     path('match/update_atp_match/', update_atp_match, name='update_atp_match'),
     path('match/remove_atp_match/', remove_atp_match, name='remove_atp_match'),
     path('match/update_atp_perform/', update_atp_perform, name='update_atp_perform'),
     path('match/import_atp', import_atp_match, name="import_atp_match"),
+    path('match/import_wta', import_wta_match, name="import_wta_match"),
     #jet admin urls
     path('jet_api/', include('jet_django.urls')),
+
+    #functions
+    path('change/', change_winna_to_max, name="change_winna_to_max"),
 ]

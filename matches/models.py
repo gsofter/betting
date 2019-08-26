@@ -10,8 +10,8 @@ class ATPMatch(models.Model):
     location = models.CharField(max_length=50, null=True) #Location name
     court = models.CharField(max_length=50, null=True)
     surface = models.CharField(max_length=50, null=True)
-    winner = models.CharField(max_length = 20, null=True) ## of games in the match
-    loser = models.CharField(max_length = 20, null=True) ## of games in the match
+    winner = models.CharField(max_length = 50, null=True) ## of games in the match
+    loser = models.CharField(max_length = 50, null=True) ## of games in the match
     home_r1 = models.IntegerField( null=True) #Number of games won in the match by Home player
     away_r1 = models.IntegerField( null=True) #Number of games won in the match by Away player
     home_r2 = models.IntegerField( null=True) #Number of games won in the match by Home player
@@ -64,6 +64,9 @@ class ATPMatch(models.Model):
     away_unibet = models.FloatField( blank=True, null=True)    # Unibet  Sports odds of match Away player
     home_betclic = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match Home player
     away_betclic = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match Away player
+    
+    home_max = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Home player
+    away_max = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Away player
     home_avg = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Home player
     away_avg = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Away player
     
@@ -75,11 +78,13 @@ class ATPMatch(models.Model):
 class WTAMatch(models.Model):
     #general match data
     date = models.DateTimeField(blank=True, null=True)  #Match Date
-    round = models.CharField(max_length=20, null=True)  #Match rounds
+    round = models.CharField(max_length=50, null=True)  #Match rounds
     tournament = models.CharField(max_length=50, null=True) #Tournament name
     location = models.CharField(max_length=50, null=True) #Location name
-    winner = models.CharField(max_length = 20, null=True) ## of games in the match
-    loser = models.CharField(max_length = 20, null=True) ## of games in the match
+    court = models.CharField(max_length=50, null=True)
+    surface = models.CharField(max_length=50, null=True)
+    winner = models.CharField(max_length = 50, null=True) ## of games in the match
+    loser = models.CharField(max_length = 50, null=True) ## of games in the match
     home_r1 = models.IntegerField( null=True) #Number of games won in the match by Home player
     away_r1 = models.IntegerField( null=True) #Number of games won in the match by Away player
     home_r2 = models.IntegerField( null=True) #Number of games won in the match by Home player
@@ -131,10 +136,15 @@ class WTAMatch(models.Model):
     away_unibet = models.FloatField( blank=True, null=True)    # Unibet  Sports odds of match Away player
     home_betclic = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match Home player
     away_betclic = models.FloatField( blank=True, null=True)    # Betclic.fr  Sports odds of match Away player
+    
+    home_max = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Home player
+    away_max = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Away player
+    created_at = models.DateTimeField(auto_now_add=True)
     home_avg = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Home player
     away_avg = models.FloatField( blank=True, null=True)    # Sports odds of average odds of match Away player
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.home + " vs " + self.away

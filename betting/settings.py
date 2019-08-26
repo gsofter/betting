@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MASTER_BASE_DIR = os.path.dirname(__file__)
 
@@ -32,6 +36,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,10 +98,9 @@ DATABASES = {
         'USER' : 'root',
         'PASSWORD' : '',
         'HOST' : 'localhost',
-        'PORT' : '3306'
+        'PORT' : '3306',
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

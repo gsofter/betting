@@ -56,7 +56,7 @@ ROBOTSTXT_OBEY = True
 
 DOWNLOADER_MIDDLEWARES = {
    # 'sports_scrapy.middlewares.SportsScrapyDownloaderMiddleware': 543,
-   'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 1,
+   # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 1,
 }
 
 # Enable or disable extensions

@@ -88,7 +88,7 @@ class AtpPlayerScrapyPipeline(object):
         if 'atpplayer' not in getattr(spider, 'pipelines', []):
             return item
         try:
-            player = ATPPlayer.objects.get(name=item["name"])
+            player = ATPPlayer.objects.get(nicknames__contain=item["name"])
             print (player.name + " already exist")
             player.rank = item['rank']
             player.name = item['name']
@@ -141,7 +141,17 @@ class AtpMatchScrapyPipeline(object):
                 if len(home_player) > 0 and len(away_player) > 0:
                     item['home'] = home_player[0].name
                     item['away'] = away_player[0].name
+                elif len(home_player) > 0:
+                    item['home'] = home_player[0].name
+                    item['away'] = ''
+                    self.register_special_name(away)
+                elif len(away_player) > 0:
+                    item['home'] = ''
+                    item['away'] = home_player[0].name
+                    self.register_special_name(home)
                 else:
+                    self.register_special_name(home)
+                    self.register_special_name(away)
                     print ('home or away player is not listed in the players list')
                     self.export_to_file(item)
                     return item
@@ -184,6 +194,10 @@ class AtpMatchScrapyPipeline(object):
         file = open('players.txt', 'a+')
         file.write(item['home'] + "\r\n")
         file.write(item['away'] + "\r\n")
+        file.close()
+    def register_special_name(self,str):
+        file = open('players.txt', 'a+')
+        file.write(str + "\r\n")
         file.close()
 
 class WtaMatchScrapyPipeline(object):
@@ -243,6 +257,11 @@ class WtaMatchScrapyPipeline(object):
         file = open('wtaplayers.txt', 'a+')
         file.write(item['home'] + "\r\n")
         file.write(item['away'] + "\r\n")
+        file.close()
+
+    def register_special_name(self, str):
+        file = open('wtaplayers.txt', 'a+')
+        file.write(str + "\r\n")
         file.close()
 
 class AtpTournamentScrapyPipeline(object):
@@ -457,7 +476,8 @@ class AtpOddScrapyPipeline(object):
                 print('home or away player does not exist on the players list')
                 self.export_to_file(item)
                 return item
-            match = ATPMatch.objects.get(home=item["home"], away=item['away'])
+            matches = WTAMatch.objects.filter(home=item["home"], away=item['away'])
+            match = matches[0]
             match.home_unibet = item['ubhome']
             match.home_betclic = item['bchome']
             match.home_winamax = item['maxhome']
@@ -504,7 +524,8 @@ class WtaOddScrapyPipeline(object):
                 print('home or away player does not exist on the players list')
                 self.export_to_file(item)
                 return item
-            match = WTAMatch.objects.get(home=item["home"], away=item['away'])
+            matches = WTAMatch.objects.filter(home=item["home"], away=item['away'])
+            match = matches[0]
             match.home_unibet = item['ubhome']
             match.home_betclic = item['bchome']
             match.home_winamax = item['maxhome']
@@ -520,7 +541,7 @@ class WtaOddScrapyPipeline(object):
         return item
 
     def export_to_file(self, item):
-        file = open('players.txt', 'a+')
+        file = open('wtaplayers.txt', 'a+')
         file.write(item['home'] + "\r\n")
         file.write(item['away'] + "\r\n")
         file.close()

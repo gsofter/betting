@@ -55,8 +55,8 @@ class AtpMatchSpider(scrapy.Spider):
                 away = get_teamname_from_str(str)
             #tournament and location
                 _t = match_item.xpath('./@data-league-name').extract_first().strip()
-                tournament = _t.split(' ')[0]
-                location = _t.split(' ')[1]
+                tournament = _t
+                location = ''
 
             #match_status and comment
                 match_status = match_item.xpath('./@data-statustype').extract_first().strip()
@@ -69,13 +69,13 @@ class AtpMatchSpider(scrapy.Spider):
                     item['date'] = date
                 #common fields
                     item['round'] = round
-                    item['winner'] = winner
-                    item['loser'] = loser
                     item['tournament'] = tournament
                     item['location'] = location
                     item['comment'] = match_status
                     item['status'] = match_status
-                    item['totalgames'] = totalgames
+                    item['winner'] = ''
+                    item['loser'] = ''
+                    item['totalgames'] = 0
                     item['bestof'] = 3
                 #home player fields
                     item['home_r1'] = -1
@@ -204,8 +204,8 @@ class WtaMatchSpider(scrapy.Spider):
                 away = get_teamname_from_str(str)
             #tournament and location
                 _t = match_item.xpath('./@data-league-name').extract_first().strip()
-                tournament = _t.split(' ')[0]
-                location = _t.split(' ')[1]
+                tournament = _t
+                location = ''
 
             #match_status and comment
                 match_status = match_item.xpath('./@data-statustype').extract_first().strip()
@@ -218,13 +218,13 @@ class WtaMatchSpider(scrapy.Spider):
                     item['date'] = date
                 #common fields
                     item['round'] = round
-                    item['winner'] = winner
-                    item['loser'] = loser
                     item['tournament'] = tournament
                     item['location'] = location
+                    item['winner'] = ''
+                    item['loser'] = ''
                     item['comment'] = match_status
                     item['status'] = match_status
-                    item['totalgames'] = totalgames
+                    item['totalgames'] = 0
                     item['bestof'] = 3
                 #home player fields
                     item['home_r1'] = -1
