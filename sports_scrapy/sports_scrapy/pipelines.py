@@ -83,12 +83,35 @@ def get_formatted_name(str):
         result += ch
     return result
 
+def filter_player(player_name, type):
+    if player_name == '':
+        return ''
+    if type == 1:
+        try:
+            players = ATPPlayer.objects.filter(nicknames__contains=player_name)
+            return players[0].name
+        except ATPPlayer.DoesNotExist:
+            file = open('atp_not_registered.txt', 'a+')
+            file.write(player_name + "\r\n")
+            file.close()
+            return ''
+    elif type == 2:
+        try:
+            players = WTAPlayer.objects.filter(nicknames__contains=player_name)
+            return players[0].name
+        except WTAPlayer.DoesNotExist:
+            file = open('wta_not_registered.txt', 'a+')
+            file.write(player_name + "\r\n")
+            file.close()
+            return ''
+    return ''
+        
 class AtpPlayerScrapyPipeline(object):
     def process_item(self, item, spider):
         if 'atpplayer' not in getattr(spider, 'pipelines', []):
             return item
         try:
-            player = ATPPlayer.objects.get(nicknames__contain=item["name"])
+            player = ATPPlayer.objects.get(nicknames__contains=item["name"])
             print (player.name + " already exist")
             player.rank = item['rank']
             player.name = item['name']
@@ -132,35 +155,13 @@ class AtpMatchScrapyPipeline(object):
         if 'atpmatch' not in getattr(spider, 'pipelines', []):
             return item
         try:
-            home = item['home'].upper()
-            away = item['away'].upper()
-            try:
-                home_player = ATPPlayer.objects.filter(nicknames__contains=home)
-                away_player = ATPPlayer.objects.filter(nicknames__contains=away)
-            
-                if len(home_player) > 0 and len(away_player) > 0:
-                    item['home'] = home_player[0].name
-                    item['away'] = away_player[0].name
-                elif len(home_player) > 0:
-                    item['home'] = home_player[0].name
-                    item['away'] = ''
-                    self.register_special_name(away)
-                elif len(away_player) > 0:
-                    item['home'] = ''
-                    item['away'] = home_player[0].name
-                    self.register_special_name(home)
-                else:
-                    self.register_special_name(home)
-                    self.register_special_name(away)
-                    print ('home or away player is not listed in the players list')
-                    self.export_to_file(item)
-                    return item
-            except ATPPlayer.DoesNotExist:
-                print('home or away player does not exist on the players list')
-                self.export_to_file(item)
+            item['home'] = filter_player(item['home'].upper(),1)
+            item['away'] = filter_player(item['away'].upper(),1)
+            item['winner'] = filter_player(item['winner'].upper(),1)
+            item['loser'] = filter_player(item['loser'].upper(),1)
+            if item['home'] == '' or item['away'] == '':
                 return item
-            
-            match = ATPMatch.objects.get(home=item["home"], away=item['away'])
+            match = ATPMatch.objects.filter(home=item["home"], away=item['away'])[0]
             print (match.home + 'vs'+ match.away + match.date.strftime('%d-%b-%Y')  + " already exist")
             match.round = item['round']
             match.date = item['date']
@@ -190,40 +191,19 @@ class AtpMatchScrapyPipeline(object):
             pass
         item.save()
         return item
-    def export_to_file(self, item):
-        file = open('players.txt', 'a+')
-        file.write(item['home'] + "\r\n")
-        file.write(item['away'] + "\r\n")
-        file.close()
-    def register_special_name(self,str):
-        file = open('players.txt', 'a+')
-        file.write(str + "\r\n")
-        file.close()
 
 class WtaMatchScrapyPipeline(object):
     def process_item(self, item, spider):
         if 'wtamatch' not in getattr(spider, 'pipelines', []):
             return item
         try:
-            home = item['home'].upper()
-            away = item['away'].upper()
-            try:
-                home_player = WTAPlayer.objects.filter(nicknames__contains=home)
-                away_player = WTAPlayer.objects.filter(nicknames__contains=away)
-            
-                if len(home_player) > 0 and len(away_player) > 0:
-                    item['home'] = home_player[0].name
-                    item['away'] = away_player[0].name
-                else:
-                    print ('home or away player is not listed in the players list')
-                    self.export_to_file(item)
-                    return item
-            except WTAMatch.DoesNotExist:
-                print('home or away player does not exist on the players list')
-                self.export_to_file(item)
+            item['home'] = filter_player(item['home'].upper(),2)
+            item['away'] = filter_player(item['away'].upper(),2)
+            item['winner'] = filter_player(item['winner'].upper(),2)
+            item['loser'] = filter_player(item['loser'].upper(),2)
+            if item['home'] == '' or item['away'] == '':
                 return item
-            
-            match = WTAMatch.objects.get(home=item["home"], away=item['away'])
+            match = WTAMatch.objects.filter(home=item["home"], away=item['away'])[0]
             print (match.home + 'vs'+ match.away + match.date.strftime('%d-%b-%Y')  + " already exist")
             match.round = item['round']
             match.date = item['date']
@@ -253,16 +233,7 @@ class WtaMatchScrapyPipeline(object):
             pass
         item.save()
         return item
-    def export_to_file(self, item):
-        file = open('wtaplayers.txt', 'a+')
-        file.write(item['home'] + "\r\n")
-        file.write(item['away'] + "\r\n")
-        file.close()
 
-    def register_special_name(self, str):
-        file = open('wtaplayers.txt', 'a+')
-        file.write(str + "\r\n")
-        file.close()
 
 class AtpTournamentScrapyPipeline(object):
     def process_item(self, item, spider):
@@ -319,24 +290,13 @@ class AtpPerformScrapyPipeline(object):
         try:
             if len(item) == 0:
                 return []
-            home = item['home'].upper()
-            away = item['away'].upper()
-            try:
-                home_player = ATPPlayer.objects.filter(nicknames__contains=home)
-                away_player = ATPPlayer.objects.filter(nicknames__contains=away)
-            
-                if len(home_player) > 0 and len(away_player) > 0:
-                    item['home'] = home_player[0].name
-                    item['away'] = away_player[0].name
-                else:
-                    print ('home or away player is not listed in the players list')
-                    self.export_to_file(item)
-                    return item
-            except ATPPlayer.DoesNotExist:
-                print('home or away player does not exist on the players list')
-                self.export_to_file(item)
+            item['home'] = filter_player(item['home'].upper(),1)
+            item['away'] = filter_player(item['away'].upper(),1)
+            item['winner'] = filter_player(item['winner'].upper(),1)
+            item['loser'] = filter_player(item['loser'].upper(),1)
+            if item['home'] == '' or item['away'] == '':
                 return item
-            match = ATPMatch.objects.get(home=item["home"], away=item['away'])   
+            match = ATPMatch.objects.filter(home=item["home"], away=item['away'])[0]
             match.home_aces = item['home_aces']
             match.home_doublefault = item['home_doublefault']
             match.home_total = item['home_total']
@@ -376,12 +336,6 @@ class AtpPerformScrapyPipeline(object):
         match.save()
         return item
 
-    def export_to_file(self, item):
-        file = open('players.txt', 'a+')
-        file.write(item['home'] + "\r\n")
-        file.write(item['away'] + "\r\n")
-        file.close()
-
 class WtaPerformScrapyPipeline(object):
     def process_item(self, item, spider):
         if 'wtaperform' not in getattr(spider, 'pipelines', []):
@@ -389,24 +343,13 @@ class WtaPerformScrapyPipeline(object):
         try:
             if len(item) == 0:
                 return []
-            home = item['home'].upper()
-            away = item['away'].upper()
-            try:
-                home_player = WTAPlayer.objects.filter(nicknames__contains=home)
-                away_player = WTAPlayer.objects.filter(nicknames__contains=away)
-            
-                if len(home_player) > 0 and len(away_player) > 0:
-                    item['home'] = home_player[0].name
-                    item['away'] = away_player[0].name
-                else:
-                    print ('home or away player is not listed in the players list')
-                    self.export_to_file(item)
-                    return item
-            except WTAPlayer.DoesNotExist:
-                print('home or away player does not exist on the players list')
-                self.export_to_file(item)
+            item['home'] = filter_player(item['home'].upper(),2)
+            item['away'] = filter_player(item['away'].upper(),2)
+            item['winner'] = filter_player(item['winner'].upper(),2)
+            item['loser'] = filter_player(item['loser'].upper(),2)
+            if item['home'] == '' or item['away'] == '':
                 return item
-            match = WTAMatch.objects.get(home=item["home"], away=item['away'])
+            match = WTAMatch.objects.filter(home=item["home"], away=item['away'])[0]
             match.home_aces = item['home_aces']
             match.home_doublefault = item['home_doublefault']
             match.home_total = item['home_total']
@@ -446,12 +389,6 @@ class WtaPerformScrapyPipeline(object):
         match.save()
         return item
 
-    def export_to_file(self, item):
-        file = open('players.txt', 'a+')
-        file.write(item['home'] + "\r\n")
-        file.write(item['away'] + "\r\n")
-        file.close()
-
 class AtpOddScrapyPipeline(object):
     def process_item(self, item, spider):
         if 'atpodd' not in getattr(spider, 'pipelines', []):
@@ -459,24 +396,14 @@ class AtpOddScrapyPipeline(object):
         try:
             if len(item) == 0:
                 return []
-            home = item['home'].upper()
-            away = item['away'].upper()
-            try:
-                home_player = ATPPlayer.objects.filter(nicknames__contains=home)
-                away_player = ATPPlayer.objects.filter(nicknames__contains=away)
-            
-                if len(home_player) > 0 and len(away_player) > 0:
-                    item['home'] = home_player[0].name
-                    item['away'] = away_player[0].name
-                else:
-                    print ('home or away player is not listed in the players list')
-                    self.export_to_file(item)
-                    return item
-            except ATPPlayer.DoesNotExist:
-                print('home or away player does not exist on the players list')
-                self.export_to_file(item)
+            item['home'] = filter_player(item['home'].upper(),1)
+            item['away'] = filter_player(item['away'].upper(),1)
+            item['winner'] = filter_player(item['winner'].upper(),1)
+            item['loser'] = filter_player(item['loser'].upper(),1)
+            if item['home'] == '' or item['away'] == '':
                 return item
-            matches = WTAMatch.objects.filter(home=item["home"], away=item['away'])
+            match = ATPMatch.objects.filter(home=item["home"], away=item['away'])[0]
+
             match = matches[0]
             match.home_unibet = item['ubhome']
             match.home_betclic = item['bchome']
@@ -490,15 +417,9 @@ class AtpOddScrapyPipeline(object):
             
             match.save()
         except ATPMatch.DoesNotExist:
-            pass
-        
+            pass        
         return item
 
-    def export_to_file(self, item):
-        file = open('players.txt', 'a+')
-        file.write(item['home'] + "\r\n")
-        file.write(item['away'] + "\r\n")
-        file.close()
 
 class WtaOddScrapyPipeline(object):
     def process_item(self, item, spider):
@@ -507,24 +428,13 @@ class WtaOddScrapyPipeline(object):
         try:
             if len(item) == 0:
                 return []
-            home = item['home'].upper()
-            away = item['away'].upper()
-            try:
-                home_player = WTAPlayer.objects.filter(nicknames__contains=home)
-                away_player = WTAPlayer.objects.filter(nicknames__contains=away)
-            
-                if len(home_player) > 0 and len(away_player) > 0:
-                    item['home'] = home_player[0].name
-                    item['away'] = away_player[0].name
-                else:
-                    print ('home or away player is not listed in the players list')
-                    self.export_to_file(item)
-                    return item
-            except WTAPlayer.DoesNotExist:
-                print('home or away player does not exist on the players list')
-                self.export_to_file(item)
+            item['home'] = filter_player(item['home'].upper(),2)
+            item['away'] = filter_player(item['away'].upper(),2)
+            item['winner'] = filter_player(item['winner'].upper(),2)
+            item['loser'] = filter_player(item['loser'].upper(),2)
+            if item['home'] == '' or item['away'] == '':
                 return item
-            matches = WTAMatch.objects.filter(home=item["home"], away=item['away'])
+            match = WTAMatch.objects.filter(home=item["home"], away=item['away'])[0]
             match = matches[0]
             match.home_unibet = item['ubhome']
             match.home_betclic = item['bchome']
@@ -539,9 +449,3 @@ class WtaOddScrapyPipeline(object):
             pass
         
         return item
-
-    def export_to_file(self, item):
-        file = open('wtaplayers.txt', 'a+')
-        file.write(item['home'] + "\r\n")
-        file.write(item['away'] + "\r\n")
-        file.close()

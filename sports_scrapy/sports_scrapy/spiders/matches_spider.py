@@ -32,6 +32,8 @@ class AtpMatchSpider(scrapy.Spider):
     
     start_urls = [
         'https://www.xscores.com/tennis/',
+        'https://www.xscores.com/tennis/livescores/31-08',
+        'https://www.xscores.com/tennis/livescores/30-08',
     ]
 
     def parse(self, response):
@@ -182,6 +184,8 @@ class WtaMatchSpider(scrapy.Spider):
 
     start_urls = [
         'https://www.xscores.com/tennis/',
+        'https://www.xscores.com/tennis/31-8',
+        'https://www.xscores.com/tennis/30-8',
     ]
 
     def parse(self, response):

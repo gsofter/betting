@@ -15,10 +15,11 @@ class AtpPerformSpider(scrapy.Spider):
     }
 
     start_urls = [
-        'http://www.tennisendirect.net/hommes',
-        'http://www.tennisendirect.net/hommes/australian-open-australia-wildcard-2019/',
-        'http://www.tennisendirect.net/hommes/winston-salem-open-winston-salem-2019/',
-        'http://www.tennisendirect.net/hommes/us-open-new-york-2019/'
+        'http://www.tennisendirect.net/hommes/us-open-new-york-2019/',
+        # 'http://www.tennisendirect.net/hommes',
+        # 'http://www.tennisendirect.net/hommes/australian-open-australia-wildcard-2019/',
+        # 'http://www.tennisendirect.net/hommes/winston-salem-open-winston-salem-2019/',
+        # 'http://www.tennisendirect.net/hommes/us-open-new-york-2019/'
     ]
 
     def parse(self, response):

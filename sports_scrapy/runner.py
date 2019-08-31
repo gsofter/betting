@@ -30,8 +30,8 @@ process5.crawl(WtaPerformSpider)
 process6.crawl(WtaOddSpider)
 
 process1.start() # the script will block here until the crawling is finished
-# process2.start() # the script will block here until the crawling is finished
-# process3.start() # the script will block here until the crawling is finished
-# process4.start() # the script will block here until the crawling is finished
-# process5.start() # the script will block here until the crawling is finished
-# process6.start() # the script will block here until the crawling is finished
+process2.start() # the script will block here until the crawling is finished
+process3.start() # the script will block here until the crawling is finished
+process4.start() # the script will block here until the crawling is finished
+process5.start() # the script will block here until the crawling is finished
+process6.start() # the script will block here until the crawling is finished

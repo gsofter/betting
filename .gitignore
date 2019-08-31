@@ -11,4 +11,7 @@ venv/
 #cache files
 *.pyc
 
+#csv files
+*.csv
+
 betting/
