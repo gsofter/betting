@@ -5,6 +5,7 @@ from sports_scrapy.items import AtpMatchItem,WtaMatchItem
 from time import sleep
 import time
 from  datetime import datetime
+import pytz
 
 def get_teamname_from_str(str):
     teamname = ''
@@ -32,8 +33,6 @@ class AtpMatchSpider(scrapy.Spider):
     
     start_urls = [
         'https://www.xscores.com/tennis/',
-        'https://www.xscores.com/tennis/livescores/31-08',
-        'https://www.xscores.com/tennis/livescores/30-08',
     ]
 
     def parse(self, response):
@@ -44,6 +43,8 @@ class AtpMatchSpider(scrapy.Spider):
                 time_str = match_item.xpath(".//div[@id='ko_time']/text()").extract_first().strip()
                 date_str = match_item.xpath("./@data-matchday").extract_first()
                 date = datetime.strptime(date_str + ' ' + time_str, '%Y-%m-%d %H:%M')
+                tz = pytz.utc
+                date=date.replace(tzinfo=tz)
             #round
                 round = match_item.xpath('./@data-league-round').extract_first().strip()
             
@@ -115,7 +116,7 @@ class AtpMatchSpider(scrapy.Spider):
                 away_r2_t = match_item.xpath(".//div[contains(@class,'score_ht score_cell')][2]/div[2]/text()").extract_first().strip()
                 away_r3_t = match_item.xpath(".//div[contains(@class,'score_ht score_cell')][3]/div[2]/text()").extract_first().strip()
                 away_r4_t = match_item.xpath(".//div[contains(@class,'score_ht score_cell')][4]/div[2]/text()").extract_first().strip()
-                away_r5_t = match_item.xpath(".//div[contains(@class,'score_ht score_cell')][5]/div[2]/text()").extract_first().strip()
+                away_r5_t = match_item.xpath(".//div[contains(@class,'score_ht score_cell')][5]/div[2]/text()").extract_first().strip() 
                 
                 home_r1 = get_score_from_str(home_r1_t)
                 home_r2 = get_score_from_str(home_r2_t)
@@ -184,8 +185,6 @@ class WtaMatchSpider(scrapy.Spider):
 
     start_urls = [
         'https://www.xscores.com/tennis/',
-        'https://www.xscores.com/tennis/31-8',
-        'https://www.xscores.com/tennis/30-8',
     ]
 
     def parse(self, response):
@@ -196,6 +195,8 @@ class WtaMatchSpider(scrapy.Spider):
                 time_str = match_item.xpath(".//div[@id='ko_time']/text()").extract_first().strip()
                 date_str = match_item.xpath("./@data-matchday").extract_first()
                 date = datetime.strptime(date_str + ' ' + time_str, '%Y-%m-%d %H:%M')
+                tz = pytz.utc
+                date=date.replace(tzinfo=tz)
             #round
                 round = match_item.xpath('./@data-league-round').extract_first().strip()
             #home
@@ -323,5 +324,3 @@ class WtaMatchSpider(scrapy.Spider):
                 yield item
         except:
             pass
-
-    

@@ -155,41 +155,46 @@ class AtpMatchScrapyPipeline(object):
         if 'atpmatch' not in getattr(spider, 'pipelines', []):
             return item
         try:
-            item['home'] = filter_player(item['home'].upper(),1)
-            item['away'] = filter_player(item['away'].upper(),1)
-            item['winner'] = filter_player(item['winner'].upper(),1)
-            item['loser'] = filter_player(item['loser'].upper(),1)
+            # item['home'] = filter_player(item['home'].upper(),1)
+            # item['away'] = filter_player(item['away'].upper(),1)
+            # item['winner'] = filter_player(item['winner'].upper(),1)
+            # item['loser'] = filter_player(item['loser'].upper(),1)
             if item['home'] == '' or item['away'] == '':
                 return item
-            match = ATPMatch.objects.filter(home=item["home"], away=item['away'])[0]
-            print (match.home + 'vs'+ match.away + match.date.strftime('%d-%b-%Y')  + " already exist")
-            match.round = item['round']
-            match.date = item['date']
-            match.home = item['home']
-            match.away = item['away']
-            match.location = item['location']
-            match.tournament = item['tournament']
-            match.winner = item['winner']
-            match.loser = item['loser']
-            match.status = item['status']
-            match.comment = item['comment']
-            match.home_r1 = item['home_r1']
-            match.home_r2 = item['home_r2']
-            match.home_r3 = item['home_r3']
-            match.home_r4 = item['home_r4']
-            match.home_r5 = item['home_r5']
-            match.away_r1 = item['away_r1']
-            match.away_r2 = item['away_r2']
-            match.away_r3 = item['away_r3']
-            match.away_r4 = item['away_r4']
-            match.away_r5 = item['away_r5']
-            match.home_winsets = item['home_winsets']
-            match.home_winsets = item['home_winsets']
-            match.save()
-            return item
-        except ATPMatch.DoesNotExist:
+        #ITEM EXITS ON TABLE
+            if ATPMatch.objects.filter(home=item['home'], away=item['away']).exists():
+                match = ATPMatch.objects.filter(home=item["home"], away=item['away'])[0]
+                print (match.home + 'vs'+ match.away + match.date.strftime('%d-%b-%Y')  + " already exist")
+                match.round = item['round']
+                match.date = item['date']
+                match.home = item['home']
+                match.away = item['away']
+                match.location = item['location']
+                match.tournament = item['tournament']
+                match.winner = item['winner']
+                match.loser = item['loser']
+                match.status = item['status']
+                match.comment = item['comment']
+                match.home_r1 = item['home_r1']
+                match.home_r2 = item['home_r2']
+                match.home_r3 = item['home_r3']
+                match.home_r4 = item['home_r4']
+                match.home_r5 = item['home_r5']
+                match.away_r1 = item['away_r1']
+                match.away_r2 = item['away_r2']
+                match.away_r3 = item['away_r3']
+                match.away_r4 = item['away_r4']
+                match.away_r5 = item['away_r5']
+                match.home_winsets = item['home_winsets']
+                match.home_winsets = item['home_winsets']
+                match.save()
+                return item
+        #ITEM NOT EXISTS ON TABLE
+            else:
+                item.save()
+                return item 
+        except:
             pass
-        item.save()
         return item
 
 class WtaMatchScrapyPipeline(object):
@@ -197,43 +202,45 @@ class WtaMatchScrapyPipeline(object):
         if 'wtamatch' not in getattr(spider, 'pipelines', []):
             return item
         try:
-            item['home'] = filter_player(item['home'].upper(),2)
-            item['away'] = filter_player(item['away'].upper(),2)
-            item['winner'] = filter_player(item['winner'].upper(),2)
-            item['loser'] = filter_player(item['loser'].upper(),2)
+            # item['home'] = filter_player(item['home'].upper(),2)
+            # item['away'] = filter_player(item['away'].upper(),2)
+            # item['winner'] = filter_player(item['winner'].upper(),2)
+            # item['loser'] = filter_player(item['loser'].upper(),2)
             if item['home'] == '' or item['away'] == '':
                 return item
-            match = WTAMatch.objects.filter(home=item["home"], away=item['away'])[0]
-            print (match.home + 'vs'+ match.away + match.date.strftime('%d-%b-%Y')  + " already exist")
-            match.round = item['round']
-            match.date = item['date']
-            match.home = item['home']
-            match.away = item['away']
-            match.location = item['location']
-            match.tournament = item['tournament']
-            match.winner = item['winner']
-            match.loser = item['loser']
-            match.status = item['status']
-            match.comment = item['comment']
-            match.home_r1 = item['home_r1']
-            match.home_r2 = item['home_r2']
-            match.home_r3 = item['home_r3']
-            match.home_r4 = item['home_r4']
-            match.home_r5 = item['home_r5']
-            match.away_r1 = item['away_r1']
-            match.away_r2 = item['away_r2']
-            match.away_r3 = item['away_r3']
-            match.away_r4 = item['away_r4']
-            match.away_r5 = item['away_r5']
-            match.home_winsets = item['home_winsets']
-            match.home_winsets = item['home_winsets']
-            match.save()
-            return item
-        except WTAMatch.DoesNotExist:
+            if WTAMatch.objects.filter(home=item['home'], away=item['away']).exists():
+                match = WTAMatch.objects.filter(home=item["home"], away=item['away'])[0]
+                print (match.home + 'vs'+ match.away + match.date.strftime('%d-%b-%Y')  + " already exist")
+                match.round = item['round']
+                match.date = item['date']
+                match.home = item['home']
+                match.away = item['away']
+                match.location = item['location']
+                match.tournament = item['tournament']
+                match.winner = item['winner']
+                match.loser = item['loser']
+                match.status = item['status']
+                match.comment = item['comment']
+                match.home_r1 = item['home_r1']
+                match.home_r2 = item['home_r2']
+                match.home_r3 = item['home_r3']
+                match.home_r4 = item['home_r4']
+                match.home_r5 = item['home_r5']
+                match.away_r1 = item['away_r1']
+                match.away_r2 = item['away_r2']
+                match.away_r3 = item['away_r3']
+                match.away_r4 = item['away_r4']
+                match.away_r5 = item['away_r5']
+                match.home_winsets = item['home_winsets']
+                match.home_winsets = item['home_winsets']
+                match.save()
+                return item
+            else:
+                item.save()
+                return item
+        except:
             pass
-        item.save()
         return item
-
 
 class AtpTournamentScrapyPipeline(object):
     def process_item(self, item, spider):
@@ -290,10 +297,10 @@ class AtpPerformScrapyPipeline(object):
         try:
             if len(item) == 0:
                 return []
-            item['home'] = filter_player(item['home'].upper(),1)
-            item['away'] = filter_player(item['away'].upper(),1)
-            item['winner'] = filter_player(item['winner'].upper(),1)
-            item['loser'] = filter_player(item['loser'].upper(),1)
+            # item['home'] = filter_player(item['home'].upper(),1)
+            # item['away'] = filter_player(item['away'].upper(),1)
+            # item['winner'] = filter_player(item['winner'].upper(),1)
+            # item['loser'] = filter_player(item['loser'].upper(),1)
             if item['home'] == '' or item['away'] == '':
                 return item
             match = ATPMatch.objects.filter(home=item["home"], away=item['away'])[0]
