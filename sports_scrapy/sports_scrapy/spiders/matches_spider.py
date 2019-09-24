@@ -1,7 +1,7 @@
 import scrapy
 import re
 from sports_scrapy.items import AtpMatchItem,WtaMatchItem
-
+from urllib.parse import urljoin
 from time import sleep
 import time
 from  datetime import datetime
@@ -36,6 +36,13 @@ class AtpMatchSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
+        url = 'https://www.xscores.com/tennis/'
+        href = response.xpath("//div[@id='menu4']//div[@class='dateRightArrow']/a/@href").extract_first().strip()
+        next_url = urljoin(url, href)
+        yield scrapy.Request(url, callback=self.parse_url)
+        yield scrapy.Request(next_url, callback=self.parse_url)
+
+    def parse_url(self, response):
         try:
             atp_match_rows = response.xpath("//div[@id='scoreTableDiv']//div[@id and contains(@class, 'match_line') and @data-country-name='ATP-S']")
             for match_item in atp_match_rows:
@@ -188,6 +195,13 @@ class WtaMatchSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
+        url = 'https://www.xscores.com/tennis/'
+        href = response.xpath("//div[@id='menu4']//div[@class='dateRightArrow']/a/@href").extract_first().strip()
+        next_url = urljoin(url, href)
+        yield scrapy.Request(url, callback=self.parse_url)
+        yield scrapy.Request(next_url, callback=self.parse_url)
+
+    def parse_url(self, response):
         try:
             wta_match_rows = response.xpath("//div[@id='scoreTableDiv']//div[@id and contains(@class, 'match_line') and @data-country-name='WTA-S']")
             for match_item in wta_match_rows:
