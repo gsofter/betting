@@ -14,7 +14,7 @@ cryptography==2.7
 cssselect==1.1.0
 defusedxml==0.6.0
 diff-match-patch==20181111
-Django==2.2.13
+Django==2.2.21
 django-filter==2.2.0
 django-import-export==1.2.0
 django-jet==1.0.8
