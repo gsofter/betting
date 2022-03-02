@@ -50,7 +50,7 @@ PyYAML==5.1.2
 queuelib==1.5.0
 requests==2.22.0
 rsa==4.0
-Scrapy==1.7.3
+Scrapy==1.8.2
 scrapy-djangoitem==1.1.1
 scrapy-proxies==0.4
 selenium==3.141.0
